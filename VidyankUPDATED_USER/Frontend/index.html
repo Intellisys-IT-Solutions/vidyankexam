@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vidyank</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- AOS CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+<style>
+
+    .error {
+            color: red;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        /* Popup container */
+        .popup {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 2px solid #4CAF50;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        /* Popup message text */
+        .popup p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Done button */
+        .popup button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .popup button:hover {
+            background-color: #45a049;
+        }
+
+        /* Animation for fading out */
+        .fade-out {
+            animation: fadeOut 1s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+</style>
+
+</head>
+<body>
+  <!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="final logo.png" alt="Eklavya Logo">
+    </div>
+    <div class="signup">
+      <a href="pages/login.html" class="signup-btn">Login</a>
+    </div>
+  </nav>
+  <section class="hero">
+    <video autoplay loop muted playsinline class="hero-video">
+      <source src="backvideo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <div class="hero-content">
+    
+      <h1>Welcome to Vidyank</h1>
+      <p>Join the most comprehensive online test series platform designed to help you ace your JEE, NEET, and MHT-CET exams. With mock tests, detailed performance analysis, and expert guidance, we prepare you for success!</p>
+      <a href="pages/login.html" class="cta-btn">Start Preparing Now</a>
+    </div>
+    
+    <div class="hero-image">
+      <img src="3.png" alt="Eklavya Test Series">
+    </div>
+  </section>
+  
+
+  <section class="select-course">
+    <h2>Select Your Course</h2><br>
+    <div class="course-buttons" data-aos="fade-up" data-aos-duration="1000"  >
+      <a class="course-btn">JEE</a>
+      <a class="course-btn">NEET</a>
+      <a class="course-btn">MHT-CET</a>
+      <a class="course-btn">FMGE</a>
+    </div>
+  </section>
+  
+
+  <section class="why-choose">
+    <h2>Why Choose Vidyank?</h2><br>
+    <div class="container-wrapper" >
+      
+      <div class="feature-box" data-aos="flip-right" data-aos-duration="1000">
+        <img src="mocktest.jpg" alt="Mock Tests">
+        <h3>Real Exam Mock Tests</h3>
+        <p>Experience real exam conditions with our <br>well-structured mock tests.</p>
+      </div>
+  
+      <div class="feature-box"  data-aos="flip-right" data-aos-duration="1000">
+        <img src="analytics.jpg" alt="Performance Analytics">
+        <h3>Performance Analytics</h3>
+        <p>Track your progress with <br>in-depth analytics and personalized reports.</p>
+      </div>
+  
+      <div class="feature-box" data-aos="flip-right" data-aos-duration="1000">
+        <img src="study.jpg" alt="Study Materials">
+        <h3>AI-Powered Learning Tools</h3>
+        <p>Enhance your educational experience with AI-driven tools to meet your individual needs.</p>
+      </div>
+
+      <div class="feature-box" data-aos="flip-right" data-aos-duration="1000">
+        <img src="content.jpg" alt="Quality Contents">
+        <h3>Top Quality Test Series</h3>
+        <p>Prepare effectively with our comprehensive test series, real exam conditions.</p>
+      </div>
+  
+    </div>
+  </section>
+  
+  <section class="course-info">
+    <div class="course-text">
+      <h2>Prepare with Vidyank: Videos, Question Papers & Test Series</h2>
+      <p>Unlock your potential with Vidyank! Gain access to expertly curated study materials, interactive video lessons, and an extensive collection of previous years' question papers. Enhance your exam readiness with our structured test series designed to give you a competitive edge in JEE, NEET, MHT-CET, and FMGE.</p>
+      
+      <div class="course-buttons">
+        <div class="course-option">
+          <h3>JEE Course</h3>
+          <a href="#" class="cta-btn" data-aos="flip-right" data-aos-duration="1000" >Try for Free</a>
+        </div>
+        
+        <div class="course-option">
+          <h3>NEET Course</h3>
+          <a href="#" class="cta-btn"data-aos="flip-left" data-aos-duration="1000">Try for Free</a>
+        </div>
+        
+        <div class="course-option">
+          <h3>MHT-CET Course</h3>
+          <a href="#" class="cta-btn" data-aos="flip-right" data-aos-duration="1000">Try for Free</a>
+        </div>
+        
+        <div class="course-option">
+          <h3>FMGE Course</h3>
+          <a href="#" class="cta-btn" data-aos="flip-left" data-aos-duration="1000">Try for Free</a>
+        </div>
+      </div>
+    </div>
+  
+    <div class="course-image">
+      <img src="testt.png" alt="Course Image">
+    </div>
+  </section>
+
+
+  <section class="talk-to-expert">
+  <h2>Our Application Preview</h2>
+  <br>
+  <div class="slider-container">
+    <div class="slider">
+      
+        <div class="slide"><img src="laptop3.png" alt="Image 2"></div>
+        <div class="slide"><img src="mobile3.png" alt="Image 3"></div>
+        <div class="slide"><img src="ipad (2).png" alt="Image 4"></div>
+        <div class="slide"><img src="mobile4.png" alt="Image 5"></div>
+    </div>
+</div>
+</section>
+
+
+<section class="talk-to-expert">
+  <h2>Talk to an Expert</h2>
+  <p>Have any questions or need guidance on your exam preparation? Reach out to our experts and get personalized advice!</p>
+
+  <form action="http://localhost:5000/api/contact" method="post" class="contact-form" id="contactForm" onsubmit="return validateForm()">
+
+      <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Enter your full name" oninput="validatename()">
+          <div class="error" id="nameError"></div>
+      </div>
+
+      <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email address" oninput="validateEmail()">
+          <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+          <label for="course">Course Interested</label>
+          <select id="course" name="course" required>
+              <option value="">Select a Course</option>
+              <option value="JEE">JEE</option>
+              <option value="NEET">NEET</option>
+              <option value="MHT-CET">MHT-CET</option>
+              <option value="FMGE">FMGE</option>
+          </select>
+          <div class="error" id="courseError"></div>
+      </div>
+
+      <div class="form-group">
+          <label for="parentNumber">Parent Mobile Number:</label>
+          <input type="text" id="parentNumber" name="parentNumber" maxlength="10" placeholder="Enter 10-digit number"  oninput="validateMobile('parentNumber', 'parentError')">
+          <div class="error" id="parentError"></div>
+      </div>
+
+      <div class="form-group">
+          <label for="studentNumber">Student Mobile Number:</label>
+          <input type="text" id="studentNumber" name="studentNumber" maxlength="10" placeholder="Enter 10-digit number" oninput="validateMobile('studentNumber', 'studentError')">
+          <div class="error" id="studentError"></div>
+      </div>
+
+      <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Write your message here..."></textarea>
+          <div class="error" id="messageError"></div>
+      </div>
+
+      <button type="submit"  class="cta-btn" id="submitBtn" >Send Message</button>
+  </form>
+
+  
+    <!-- Centered Popup Notification -->
+   
+</section>
+
+<div id="formPopup" class="popup">
+  <p>Our expert will contact you soon!</p>
+  <button id="doneButton">Done</button>
+</div>
+
+  
+ 
+
+<footer class="footer">
+  <div class="footer-logo">
+    <img src="logo.png" alt="Vidyank Logo">
+  </div>
+
+  <div class="footer-content">
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="https://vidyank.com/">Home</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-goals">
+      <h3>Popular Goals</h3>
+      <ul>
+        <li>IIT JEE</li>
+        <li>NEET UG</li>
+        <li>FMGE</li>
+        <li>MHT-CET</li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <ul>
+        <li>📧 <a href="mailto:info@vidyank.com">info@vidyank.com</a></li>
+        <li>📞 +1 234 567 890</li>
+        <li>📍 1234 Vidyak Lane, City, Country</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-social">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#"><img src="facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="twitter.png" alt="Twitter"></a>
+        <a href="#"><img src="instagram.png" alt="Instagram"></a>
+      </div>
+    </div>
+    <p>&copy; 2025 Vidyank. All Rights Reserved. <a href="#">Privacy Policy</a> <br> <a href="#">Terms & Conditions</a></p>
+  </div>
+</footer>
+<script src="formHandler.js"></script>
+
+  <script>
+       function validatename() {
+        const nameInput = document.getElementById('name');
+        const nameError = document.getElementById('nameError');
+        const regex = /^[A-Za-z\s]+$/;
+
+        if (!regex.test(nameInput.value)) {
+            nameError.textContent = 'Please enter a valid name (alphabets only)';
+            nameInput.value = nameInput.value.replace(/[^A-Za-z\s]/g, '');
+        } else {
+            nameError.textContent = '';
+        }
+    }
+
+    function validateEmail() {
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        const emailValue = emailInput.value;
+
+
+        // Replace any character except alphabets, numbers, @, ., - and _ 
+        emailInput.value = emailValue.replace(/[^A-Za-z0-9@._-]/g, '');
+
+        // Ensure only one @ symbol is allowed
+        const atCount = emailValue.match(/@/g) ? emailValue.match(/@/g).length : 0;
+
+        if (atCount > 1) {
+            emailError.textContent = 'You can include only one @ symbol';
+        } else if (atCount === 0) {
+            emailError.textContent = 'You must include an @ symbol';
+        } else {
+            emailError.textContent = '';
+        }
+    }
+
+    function validateMobile(inputId, errorId) {
+    const mobileInput = document.getElementById(inputId);
+    const errorMessage = document.getElementById(errorId);
+    const regex = /^[0-9]+$/;  // Allow numbers only
+
+    // Remove non-numeric characters immediately
+    mobileInput.value = mobileInput.value.replace(/[^0-9]/g, '');
+
+    // Check if the input is numeric and exactly 10 digits
+    if (mobileInput.value.length !== 10) {
+        errorMessage.textContent = 'Please enter a valid 10-digit mobile number';
+    } else {
+        errorMessage.textContent = '';
+    }
+
+    // Ensure parent and student mobile numbers are not the same
+    const parentMobile = document.getElementById('parentNumber').value;
+    const studentMobile = document.getElementById('studentNumber').value;
+
+    if (parentMobile === studentMobile && parentMobile !== '') {
+        document.getElementById('studentError').textContent = 'Parent and student mobile numbers must not be the same';
+    } else if (mobileInput.value.length === 10) {
+        errorMessage.textContent = '';  // Clear the error if valid
+    }
+}
+
+ // New function to enable or disable the submit button
+ function toggleSubmitButton() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const course = document.getElementById('course').value.trim();
+    const parentNumber = document.getElementById('parentNumber').value.trim();
+    const studentNumber = document.getElementById('studentNumber').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    const submitButton = document.getElementById('submitBtn');
+
+    if (name && email && course && parentNumber && studentNumber && message) {
+      submitButton.disabled = false;
+    } else {
+      submitButton.disabled = true;
+    }
+  }
+
+  // Function to validate the form fields and call the button toggle
+  function validateForm() {
+    validateName();
+    validateEmail();
+    validateMobile('parentNumber', 'parentError');
+    validateMobile('studentNumber', 'studentError');
+    validateMessage();
+    toggleSubmitButton();  // Call toggleSubmitButton to enable/disable submit button
+  }
+
+
+
+    const slider = document.querySelector('.slider');
+        let scrollAmount = 0;
+
+        function slideImages() {
+            if (scrollAmount >= slider.scrollWidth / 2) {
+                scrollAmount = 0; // Reset to start position
+                slider.style.transform = `translateX(0)`;
+            }
+            scrollAmount += 1; // Adjust speed
+            slider.style.transform = `translateX(-${scrollAmount}px)`;
+            requestAnimationFrame(slideImages);
+        }
+
+        // Duplicate images for infinite loop
+        function duplicateSlides() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                let clone = slide.cloneNode(true);
+                slider.appendChild(clone);
+            });
+        }
+
+        duplicateSlides();
+        slideImages();
+
+  
+</script>
+
+
+</body>
+</html>

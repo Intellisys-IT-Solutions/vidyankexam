@@ -1,0 +1,781 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #091522; /* Sky blue gradient background */
+  padding: 0px 10%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+    height: 60%;
+    width: 130px; /* Adjust based on your logo size */
+}
+
+.signup .signup-btn {
+  text-decoration: none;
+  background: linear-gradient(90deg, #007bff, #00d4ff); /* Blue to Cyan */
+  color: white;
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease-in-out;
+  box-shadow: 0 5px 15px rgba(221, 36, 118, 0.4);
+  border: none;
+}
+
+.signup .signup-btn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(90deg, #0056b3, #0099cc); /* Darker Blue */
+  box-shadow: 0 10px 25px rgba(0, 123, 255, 0.6);
+}
+
+.signup .signup-btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.signup .signup-btn:hover::after {
+  opacity: 1;
+}
+
+
+
+/* Hero Section */
+
+
+.hero-content {
+  width: 50%;
+  color: black;
+  text-align: left;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 89px;
+  height: 75vh;
+  animation: zoomIn 1s ease-out;
+  overflow: hidden;
+}
+
+.hero-video {
+  opacity: 0.1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.hero-content, .hero-image {
+  position: relative;
+  z-index: 1;
+  
+}
+
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.cta-btn {
+  text-decoration: none;
+  background-color: #00aaff; /* Sky blue on hover */
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #239ee0;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.hero-image {
+  width: 50%;
+}
+
+.hero-image img {
+  width: 95%;
+  height: auto;
+  border-radius: 10px;
+  
+}
+
+
+/* Select Course Section */
+.select-course {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #ecfaff; /* Light blue background to match theme */
+    animation: fadeInSlideUp 1.5s ease-out;
+  }
+  
+  .select-course h2 {
+    font-size: 2.3rem;
+    color: black;
+    
+  }
+  
+  /* Course Buttons */
+  .course-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .course-btn {
+    text-decoration: none;
+    background-color: #fff;
+    color: #1798d7; /* Dark blue */
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid #1798d7;
+  }
+  
+  .course-btn:hover {
+    background-color: #1798d7;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+
+  /* Why Choose Eklavya Section */
+    .why-choose {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f7fdff; /* Light blue shade */
+  }
+  
+  .why-choose h2 {
+    font-size: 2.3rem;
+    color: black /* Dark blue from theme */ 
+  }
+  
+  /* Container Wrapper */
+  .container-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  /* Feature Box Styling */
+  .feature-box {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    width: 300px;
+    height: 100%;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-box img {
+    width: 120px; /* Adjust based on actual image size */
+    margin-bottom: 15px;
+  }
+  
+  .feature-box h3 {
+    font-size: 1.5rem;
+    color: #1798d7;
+    margin-bottom: 10px;
+  }
+  
+  .feature-box p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  /* Hover Effect */
+  .feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+/* Course Info Section */
+.course-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ecfaff; /* Light blue background */
+    padding: 60px 20px;
+    text-align: left;
+  }
+  
+  .course-text {
+    width: 83%;
+  }
+  
+  .course-text h2 {
+    font-size: 1.9rem;
+    color: #000000; /* Dark blue */
+    margin-bottom: 20px;
+    margin-left: 68px;
+  }
+  
+  .course-text p {
+    margin-left: 68px;
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  
+  .course-buttons {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .course-option {
+    width: 220px;
+    text-align: center;
+  }
+  
+  .course-option h3 {
+    font-size: 1.5rem;
+    color: black;
+    margin-bottom: 10px;
+  }
+  
+  /* Updated Try for Free Button */
+  .cta-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #1e90ff; /* Blue background */
+    color: white;
+    padding: 15px 35px;
+    border-radius: 50px; /* Rounded shape for a pill effect */
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    border: none;
+  }
+  
+  .cta-btn:hover {
+    background-color: #1798d7; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight scale effect */ /* Slight lift effect */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cta-btn:active {
+    background-color: #1e90ff; /* Retain original blue when clicked */
+    transform: scale(0.98); /* Slightly shrink when clicked */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+
+  .slider-container {
+    width: 80%;
+    overflow: hidden;
+    position: relative;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slider {
+    display: flex;
+    width: max-content;
+    gap: 10px;
+}
+
+.slide {
+    width: 300px; /* Fixed width */
+    flex: 0 0 auto;
+}
+
+.slide img {
+    width: 100%;
+    height: 472px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+  
+  /* Course Image Styling */
+  .course-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  /* Talk to Expert Section */
+.talk-to-expert {
+    background-color: #f7fdff; /* Light blue background */
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .talk-to-expert h2 {
+    font-size: 2.3rem;
+    color: #070707; /* Dark blue */
+    margin-bottom: 20px;
+  }
+  
+  .talk-to-expert p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  
+  /* Form Styling */
+  .contact-form {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color:#dad0d029;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    text-decoration: none;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+ 
+ 
+  
+  .form-group label {
+    font-size: 1rem;
+    color: #1798d7;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .form-group input, 
+  .form-group select, 
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #262525;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+  .form-group textarea {
+    height: 150px;
+  }
+  
+  button.cta-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #1e90ff;
+    color: white;
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    border: none;
+    margin-top: 20px;
+  }
+  
+  button.cta-btn:hover {
+    background-color: #1798d7;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  button.cta-btn:active {
+    background-color: #1e90ff;
+    transform: translateY(0);
+  }
+  
+
+  /* Footer Styling */
+  .footer {
+    background-color:#091522;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    text-align: left;
+    flex-wrap: nowrap;
+  }
+
+  .footer-logo img {
+    max-width: 150px;
+    height: auto;
+    margin-right: 70%;
+  }
+
+  .footer-links,
+  .footer-contact,
+  .footer-goals {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-links h3,
+  .footer-contact h3,
+  .footer-goals h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+
+  .footer-links ul,
+  .footer-contact ul,
+  .footer-goals ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links ul li,
+  .footer-contact ul li,
+  .footer-goals ul li {
+    margin: 5px 0;
+  }
+
+  .footer-links ul li a,
+  .footer-contact ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    transition: color 0.3s;
+  }
+
+  .footer-links ul li a:hover,
+  .footer-contact ul li a:hover {
+    color: #007bff;
+  }
+
+  .footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .footer-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-social h3 {
+    margin-bottom: 10px;
+  }
+
+  .social-icons a {
+    margin: 0 10px;
+    display: inline-block;
+  }
+
+  .social-icons img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+  }
+
+  .social-icons img:hover {
+    transform: scale(1.1);
+  }
+
+  .footer-bottom p {
+    font-size: 14px;
+    margin: 10px 0 0;
+  }
+
+  .footer-bottom p a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .footer-bottom p a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 767px) {
+    .footer-logo {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .footer-content{
+      gap: 30px;
+    }
+
+    .footer-logo img {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  /* Responsive Styles */
+@media (max-width: 769px) {
+  .hero {
+    flex-direction: column; /* Stack content vertically */
+    padding: 30px 20px;
+    height: auto;
+    text-align: center;
+  }
+
+  .hero-content, .hero-image {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .hero-image {
+    order: -1; /* Image moves to the top on mobile */
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    padding: 10px 25px;
+    font-size: 1rem;
+  }
+
+  .hero-image img {
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .course-info {
+    flex-direction: column; /* Stack content vertically */
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .course-text, .course-image {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .course-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .course-image img {
+    width: 90%;
+    margin: 20px auto;
+  }
+  .course-text h2
+  {
+    margin-left: 0px;
+  }
+  .course-text p{
+    margin-left: 0px;
+  }
+  .contact-form
+  {
+    width: 94%;
+  }
+
+ 
+}
+
+@media (max-width: 480px) {
+  .logo img
+  {
+    width: 115px;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .cta-btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+
+  .hero-image img {
+    width: 85%;
+  }
+
+  .course-info
+  {
+    flex-direction: column;
+  }
+
+  .course-text h2 {
+    font-size: 1.6rem;
+  }
+
+  .course-text p {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .course-image img {
+    width: 85%;
+  }
+  .course-text h2
+  {
+    margin-left: 0px;
+  }
+  .course-text p{
+    margin-left: 0px;
+  }
+  .contact-form
+  {
+    width: 94%;
+  }
+  
+.talk-to-expert p {
+  font-size: 1.0rem;
+}
+ 
+button.cta-btn {
+  font-size: 0.9rem;
+}
+
+
+}
+
+
+
+/* For iPad screens */
+
+/* Further optimization for iPad landscape screens */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+   .logo img
+   {
+    width: 156px;
+    }
+    .hero {
+        flex-direction: row;
+        text-align: left;
+        padding: 40px;
+    }
+
+    .hero-image img {
+      width: 120%;
+    }
+
+    .hero .image {
+        width: 50%;
+        order: -1; /* Move the image above the text */
+    }
+
+    .hero .content {
+        width: 50%;
+        padding-left: 20px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.6rem;
+    }
+    .course-text h2 {
+      font-size: 2.3rem;
+    }
+
+    .course-info {
+      display: flex;
+      flex-direction: column;
+}
+.course-text p {
+  font-size: 1.8rem;
+}
+.feature-box{
+  width: 335px;
+}
+.feature-box p {
+  font-size: 1.4rem;
+}
+
+.form-group label {
+  font-size: 1.2rem;
+}
+
+.talk-to-expert p {
+    font-size: 1.4rem;
+}
+
+
+.course-text h2 {
+  font-size: 3.0rem;
+  margin-left: 0px;
+}
+.course-text p {
+  font-size: 1.9rem;
+  margin-left: 0px;
+}
+.course-option h3 {
+  font-size: 1.7rem;
+}
+.cta-btn {
+  font-size: 1.3rem;
+}
+}

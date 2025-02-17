@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Series</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/userDash.css">
+</head>
+
+<body>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="header-title">
+          <a href="freetest.html" class="back-button">
+            <i class="icon">←</i>
+          </a>
+          <h1>NEET - Test Series 1</h1>
+        </div>
+
+
+        <div class="profile">
+          <div>
+            <p class="profile-name" id="user-fullname">Loading...</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="question-container">
+    <div class="question-item" onclick="showPopup(1, 1, 'Duration: 3 hours. Total marks: 100. No negative marking.')">
+      <div class="question-content">
+        <div class="question-header">
+          <h2>Question Paper 1</h2>
+          <span class="badge">New</span>
+        </div>
+        <div class="question-info">
+          <p><i class="icon">📚</i> Test Series: 1</p>
+          <p><i class="icon">⏱️</i> Duration: 3 hours</p>
+          <p><i class="icon">📝</i> Total Questions: 180</p>
+        </div>
+        <div class="question-footer">
+          <span class="status">Not Attempted</span>
+          <button class="start-btn">Start Test</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-item" onclick="showPopup(1, 2, 'Duration: 3 hours. Total marks: 100. No negative marking.')">
+      <div class="question-content">
+        <div class="question-header">
+          <h2>Question Paper 2</h2>
+        </div>
+        <div class="question-info">
+          <p><i class="icon">📚</i> Test Series: 2</p>
+          <p><i class="icon">⏱️</i> Duration: 3 hours</p>
+          <p><i class="icon">📝</i> Total Questions: 180</p>
+        </div>
+        <div class="question-footer">
+          <span class="status">Not Attempted</span>
+          <button class="start-btn">Start Test</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-item" onclick="showPopup(1, 3, 'Duration: 3 hours. Total marks: 100. No negative marking.')">
+      <div class="question-content">
+        <div class="question-header">
+          <h2>Question Paper 3</h2>
+        </div>
+        <div class="question-info">
+          <p><i class="icon">📚</i> Test Series: 3</p>
+          <p><i class="icon">⏱️</i> Duration: 3 hours</p>
+          <p><i class="icon">📝</i> Total Questions: 180</p>
+        </div>
+        <div class="question-footer">
+          <span class="status">Not Attempted</span>
+          <button class="start-btn">Start Test</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <style>
+    
+    /* Image Slider */
+    .image-slider {
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .image-slider img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .slider-container {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-slider-container {
+      display: flex;
+
+      transition: transform 1s ease-in-out;
+    }
+
+    /* Popup Styles */
+    .popup-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+      /* height: 700px; */
+    }
+
+    .popup-content {
+      background: #1f2937;
+      border-radius: 1rem;
+      width: 40%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .popup-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .popup-header h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .popup-body {
+      padding: 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .popup-footer {
+      padding: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #2dd4bf;
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #14b8a6;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .instructions {
+      height: 22rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+     
+
+      .question-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .popup-content {
+        width: 82%;
+        margin-top: 5%;
+        height: 90%;
+      }
+      
+      
+      .instructions{
+        height: 17rem;
+      }
+      .close-btn
+      {
+        margin-top: -18px;
+      }
+    }
+    
+    @media (max-width: 1024px)
+    {
+      .popup-content {
+        width: 82%;
+       
+        height: 90%;
+      }
+     
+    
+    }
+    
+  </style>
+  <div class="popup-overlay" id="popup-overlay">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h2>Test Instructions</h2>
+        <button class="close-btn" onclick="closePopup()">×</button>
+      </div>
+      <div class="popup-body">
+        <p id="popup-test-series"></p>
+        <p id="popup-question-paper"></p>
+
+        <div class="instructions">
+          <div class="slider-container">
+            <div class="image-slider">
+              <div class="image-slider-container">
+                <img src="../1.png" alt="Image 1">
+                <img src="../3.png" alt="Image 2">
+                <img src="../2.png" alt="Image 3">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-footer">
+        <button class="btn btn-secondary" onclick="closePopup()">Cancel</button>
+        <button class="btn btn-primary" onclick="startExam()">Start</button>
+      </div>
+
+      <script src="../scripts/mytests.js"></script>
+      <script src="page_dynamic_name.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ekalavyaa - Online Test Platform</title>
+  <style>
+    /* Global Styles */
+    :root {
+      --primary-color: #2f9a96; /* Teal/Greenish */
+      --secondary-color: #19065e; /* Deep Purple/Blue */
+      --text-color: #ffffff; /* White */
+      --light-bg: #47464d; /* Dark Gray */
+      --dark-bg: #000; /* Black */
+      --box-shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      text-align: center;
+    }
+    
+    .background {
+      width: 430px;
+      height: 520px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+    }
+    
+    .background .shape {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      border-radius: 50%;
+    }
+    
+    .shape:first-child {
+      background: linear-gradient(#2f9a96, #19065e);
+      left: -80px;
+      top: -80px;
+    }
+    
+    .shape:last-child {
+      background: linear-gradient(to right, #cf7f1c, #daa908);
+      right: -30px;
+      bottom: -80px;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      padding: 6rem 0;
+      color: white;
+    }
+    
+    .register {
+      background: #1f2937;
+      padding: 6rem 0;
+      color: white;
+    }
+
+    /* Feature Section */
+    .features {
+      padding: 4rem 2rem;
+      background-color: #1f2937;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    
+    .feature-item {
+      padding: 15px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      font-size: 18px;
+    }
+
+    /* Detailed Feature Cards */
+    .detailed-features {
+      padding: 4rem 2rem;
+      background: var(--dark-bg);
+    }
+    
+    .feature-card {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+      background: #1f2937;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px var(--box-shadow-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 15px var(--box-shadow-color);
+    }
+    
+    .feature-card.reverse {
+      flex-direction: row-reverse;
+    }
+    
+    .feature-card img {
+      width: 50%;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 6px var(--box-shadow-color);
+    }
+    
+    .feature-card img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px var(--box-shadow-color);
+    }
+
+    /* Button */
+    .btn {
+      padding: 10px 20px;
+      border: 2px solid var(--primary-color);
+      background: transparent;
+      color: var(--primary-color);
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    /* Register Button */
+    .register-btn {
+      display: inline-block;
+      padding: 15px 40px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      text-transform: uppercase;
+      background: linear-gradient(to bottom, #2fc5a8, #1b9f83); /* Gradient background */
+      border: none;
+      border-radius: 50px; /* Rounded shape */
+      text-decoration: none;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .register-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .register-btn:active {
+      transform: translateY(0px);
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--light-bg);
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .social-icon {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    
+    .social-icon:hover {
+      text-decoration: underline;
+    }
+    
+    .core {
+      font-size: 2rem;
+    }
+    
+    .core-p {
+      font-size: 1.5rem;
+    }
+
+    /* Animation for the welcome text */
+    @keyframes floatText {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    
+    /* Modified floating-text styling so it appears only at the bottom (in normal flow) */
+    .floating-text {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      margin: 2rem 0;
+      /* If you want the text to animate, you can uncomment the animation below */
+      /* animation: floatText 10s linear infinite; */
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="core">Core Feature</h1>
+    <p class="core-p">न हि ज्ञानेन सदृशं पवित्रमिह विद्यते।</p>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature-item">🚀 Concurrent Tests</div>
+    <div class="feature-item">💰 Sell Exams</div>
+    <div class="feature-item">📊 Detailed Analysis</div>
+    <div class="feature-item">📧 Email Templates</div>
+    <div class="feature-item">📤 Export Data</div>
+    <div class="feature-item">💻 Exam Monitor</div>
+    <div class="feature-item">🎓 Test Maker Software</div>
+    <div class="feature-item">📝 Question Types</div>
+    <div class="feature-item">📂 File Storage</div>
+    <div class="feature-item">🔍 Cheating Prevention</div>
+    <div class="feature-item">🏆 Certificate Maker</div>
+    <div class="feature-item">🔐 Data Security</div>
+    <div class="feature-item">🔑 Self Registration</div>
+    <div class="feature-item">🎨 Theme Builder</div>
+    <div class="feature-item">👀 Instructors / Sub-Admins</div>
+    <div class="feature-item">📄 Printable Reports</div>
+    <div class="feature-item">📥 Excel Upload</div>
+    <div class="feature-item">📞 Support</div>
+    <div class="feature-item">📱 SMS Integration</div>
+  </section>
+
+  <!-- Detailed Features Section -->
+  <section class="detailed-features">
+    <div class="container">
+      <div class="feature-card">
+        <div class="card-content">
+          <h3>Empower the learner – Test Maker Software</h3>
+          <p>
+            The candidate can create a test from a huge question bank specifying Unused, Incorrect, and Flagged questions.
+          </p>
+          <button class="btn">Learn More</button>
+        </div>
+        <img src="./c1d7b424-0011-4cd0-8caa-aa57fbc5649d.webp" alt="Test Maker" />
+      </div>
+
+      <div class="feature-card reverse">
+        <div class="card-content">
+          <h3>UserGuide Of Total Application Images with Texts</h3>
+          <p>
+            Core Features: The system includes data tracking, payment gateways, and coding functionalities.
+          </p>
+          <button class="btn">Learn More</button>
+        </div>
+        <img src="./UserGuide.png" alt="UserGuide" />
+      </div>
+
+      <div class="feature-card">
+        <div class="card-content">
+          <h3>An Assessment Software with Advanced Question Types</h3>
+          <p>
+            SpeedExam offers you 10 different types of questions including Multiple Choice, True/False, Essay, Video/Audio questions.
+          </p>
+          <button class="btn">Learn More</button>
+        </div>
+        <img src="./Advanced Question.jpeg" alt="Advanced Question Types" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Register Section -->
+  <section class="register">
+    <p style="margin-top: 20px; font-size: 1.5rem; color: var(--primary-color);">
+        Register today – it's a great opportunity!
+      </p>
+    <a href="/register" class="register-btn">Register Now</a>
+   
+  </section>
+
+  <!-- Welcome Text (Displayed only at the bottom of the page) -->
+  <div class="floating-text">
+    Welcome to Ekalavyaa - Your Gateway to Smarter Assessments!
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="social-links">
+        <a href="#" class="social-icon">Facebook</a>
+        <a href="#" class="social-icon">Twitter</a>
+        <a href="#" class="social-icon">LinkedIn</a>
+        <a href="#" class="social-icon">Instagram</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

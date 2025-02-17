@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEET Mock Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.3.2/dist/socket.io.min.js"></script>
+
+
+  <style>
+    /* General Body and Font Setup */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      overflow-y: auto;
+      overflow-x: auto;
+
+    }
+
+
+
+    /* Container Setup */
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #8c8ca7;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    header h1 {
+      margin-left: -36px;
+      margin: 0;
+      text-align: center;
+      font-size: 36px;
+      line-height: 80px;
+      flex-grow: 1;
+    }
+
+    /* User Info Container */
+    .user-info {
+      padding: 10px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+      width: fit-content;
+    }
+
+    /* Individual Info Line */
+    .user-info p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    /* Labels (User ID, Username) */
+    .user-info strong {
+      margin-right: 8px;
+      font-weight: 600;
+    }
+
+    /* User ID & Username Styling */
+    .user-info .id,
+    .user-info .username {
+      font-weight: bold;
+    }
+
+
+    /* Main Content Styling */
+    .content {
+      display: flex;
+      justify-content: space-between;
+      /* border: solid blue; */
+
+      gap: 20px 10px;
+      flex-grow: 1;
+      padding: 20px;
+      flex-wrap: wrap;
+      overflow-y: scroll;
+      /* Allow scrolling in the content area */
+
+
+    }
+
+    /* Left Panel and Status Section */
+    .left-area {
+      display: flex;
+      flex-direction: column;
+      width: 30%;
+    }
+
+    .right-panel {
+      flex: 1;
+      padding: 20px;
+      margin-left: 20px;
+      width: 250px;
+      /* border: solid rgb(0, 68, 255); */
+    }
+
+    /* Fixed Question Area */
+    .question-area {
+      flex: 5;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      /* border: solid rgb(0, 68, 255); */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 912px;
+      height: 600px;
+      position: fixed;
+      top: 20%;
+      /* Adjust the top position for centering */
+      left: 50%;
+      transform: translateX(-34%);
+      /* Center horizontally */
+      margin-top: 20px;
+      max-height: 70vh;
+      /* Ensure it doesn’t exceed the viewport height */
+      overflow-y: auto;
+      /* Allow the question content to scroll */
+    }
+
+    /* Watermark inside the question area */
+    .question-area::before {
+      content: attr(data-watermark);
+      /* Set dynamic content */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 40px;
+      font-weight: bold;
+      color: rgba(0, 0, 0, 0.1);
+      /* Light transparent text */
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: -1;
+      /* Ensure it stays in the background */
+    }
+
+
+    /* Other Styles for the Question Area */
+    .question-area h2 {
+      font-size: 20px;
+    }
+
+    /* Options Styling */
+    .options label {
+      font-size: 16px;
+      display: block;
+      margin: 10px 0;
+    }
+
+    /* Navigation Buttons */
+    .navigation {
+      /* margin-top: 20px; */
+      display: flex;
+      /* max-height: 20px; */
+    }
+
+    .btn {
+      /* padding: 10px 20px; */
+      /* margin-right: 10px; */
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      min-height: fit-content;
+      max-height: 45px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* General Styles for Status Legend */
+    .status-legend {
+      margin-bottom: 20px;
+    }
+
+    /* Status Item Styling */
+    .status-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+
+
+
+    .status-legend {
+      font-family: Arial, sans-serif;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .blue {
+      background-color: blue;
+    }
+
+    .red {
+      background-color: red;
+    }
+
+    .green {
+      background-color: green;
+    }
+
+    .orange {
+      background-color: orange;
+    }
+
+    .purple {
+      background-color: purple;
+    }
+
+    #not-visited-count,
+    #not-answered-count,
+    #answered-count,
+    #marked-for-review-count,
+    #answered-marked-for-review-count {
+      font-weight: bold;
+    }
+
+
+
+    /* Question Numbers */
+    .question-numbers {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      width: 200px;
+    }
+
+    .question-number {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #0004ff;
+      color: white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .question-number.selected {
+      background-color: #5bc0de;
+    }
+
+    /* Footer Styling */
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* Timer Styling */
+    .timer {
+      margin-left: 80%;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 3px;
+      font-size: 20px;
+      border-radius: 5px;
+      margin-top: 120px;
+      text-align: center;
+      margin-bottom: 20px;
+      size: 8px;
+    }
+
+    /* End Test Button Styling */
+    .end-test-btn {
+      display: block;
+      /* margin: 25px auto; */
+      padding: 10px 20px;
+      background-color: red;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+
+    .end-test-btn:hover {
+      background-color: darkred;
+    }
+
+    .navigation .btn {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    #end-test-btn {
+      flex-shrink: 0;
+      /* Prevent the button from shrinking */
+    }
+
+
+    /* Camera Section */
+    #camera {
+      position: fixed;
+      top: -16px;
+      right: 10px;
+      width: 158px;
+      height: 150px;
+    }
+
+    /* Video Styling */
+    video {
+      width: 100%;
+      height: 100%;
+    }
+
+
+    @media (max-width: 1100px)and (min-width:786px) {
+
+      .question-area {
+        width: 508px;
+        margin-left: 57px;
+        margin-top: 52px;
+      }
+
+    }
+
+    @media (min-width: 790px) and(max-width:500px) {
+      .question-area {
+        position: absolute;
+        width: 464px;
+        margin-top: 113%;
+        margin-left: -16%;
+      }
+
+      .timer {
+        margin-left: 73%;
+        margin-top: 43%;
+      }
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      header {
+
+        flex-direction: column;
+
+      }
+
+      header h1 {
+        margin-left: -36px;
+      }
+
+      .timer {
+        margin-left: 59%;
+        margin-top: 59%;
+
+      }
+
+
+      #camera {
+        margin-top: 27%;
+        position: absolute;
+        /* margin-left: 22%; */
+        margin-right: -15px;
+        position: absolute;
+      }
+
+      .question-area {
+        position: absolute;
+        width: 508px;
+        margin-top: 150%;
+      }
+
+      .content {
+        flex-direction: column;
+        padding: 10px;
+
+      }
+
+      .left-area,
+      .right-panel {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .logo {
+        height: 150px;
+        width: 150px;
+      }
+
+      .question-number {
+        width: 35px;
+        height: 35px;
+      }
+
+      .question-numbers {
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      .end-test-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+      }
+
+
+    }
+
+
+    /* Question Area Container */
+    .question-area-inner {
+      position: relative;
+      /* Set the parent to relative */
+      padding-bottom: 70px;
+      /* Ensure there's space for the buttons at the bottom */
+    }
+
+    /* Navigation Buttons Styling */
+    .navigation {
+      position: absolute;
+      /* Position buttons absolutely within the container */
+      bottom: 20px;
+      /* Adjust distance from the bottom */
+      left: 0;
+      /* Align to the left of the parent container */
+      right: 0;
+      /* Ensure it spans the full width */
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* Small screens (e.g., mobile portrait) */
+    @media (max-width: 480px) {
+      .question-area {
+        margin-top: 179%;
+        width: 82%;
+        margin-left: -51px;
+        padding: 10px;
+      }
+
+      .navigation .btn {
+
+        margin-top: -3%;
+      }
+
+      .btn {
+        padding: 9px 18px;
+      }
+
+      .part1 h2 {
+        font-size: 18px;
+      }
+
+      .options label {
+        font-size: 12px;
+      }
+
+      .navigation {
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: -163px;
+      }
+
+      .btn {
+        width: 100%;
+        margin: 5px 0;
+      }
+
+      .end-test-btn {
+        width: 100%;
+        margin-right: 15px;
+      }
+
+      .header h1 {
+        margin-left: -11%;
+      }
+
+    }
+
+    .modal {
+      display: none;
+      /* Initially hidden */
+      position: fixed;
+      top: 20px;
+      /* Adjust this to position it closer to the top */
+      left: 50%;
+      transform: translateX(-50%);
+      /* Center horizontally */
+      background-color: rgba(255, 255, 255, 0.9);
+      /* White background with slight transparency */
+      color: black;
+      /* Black text color */
+      padding: 15px 30px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 9999;
+      /* Ensure the modal is on top of other elements */
+      text-align: center;
+      transition: opacity 0.3s ease, top 0.3s ease;
+      /* Smooth transition for visibility */
+    }
+
+    /* Style for the OK Button */
+    #okButton {
+      margin-top: 10px;
+      background-color: #4CAF50;
+      /* Green background for OK button */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #okButton:hover {
+      background-color: #45a049;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+  <div class="container">
+    <header>
+
+      <div class="user-info">
+        <p><strong>User ID:</strong> <span class="id" id="userId">N/A</span></p>
+        <p><strong>Username:</strong> <span class="username">Guest User</span></p>
+      </div>
+
+
+      <h1>NEET</h1>
+      <!-- <img src="./logo-dark.png" alt="Eklavya Logo" class="logo"> -->
+
+
+    </header>
+
+
+
+
+    <div class="timer" id="timer">Time Remaining: 60:00</div>
+    <div class="content">
+
+      <div class="left-area">
+        <div class="right-panel">
+
+          <div class="status-legend">
+            <div class="status-item">
+              <div class="status-indicator">
+                <span class="circle blue"></span>
+                <div id="not-visited-count">Not Visited: <span class="not-visited-number">50</span></div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="status-indicator">
+                <span class="circle red"></span>
+                <div id="not-answered-count">Not Answered: <span class="not-answered-number">50</span></div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="status-indicator">
+                <span class="circle green"></span>
+                <div id="answered-count">Answered: <span class="answered-number">0</span></div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="status-indicator">
+                <span class="circle orange"></span>
+                <div id="marked-for-review-count">Marked for Review: <span class="marked-for-review-number">0</span>
+                </div>
+              </div>
+            </div>
+            <div class="status-item">
+              <div class="status-indicator">
+                <span class="circle purple"></span>
+                <div id="answered-marked-for-review-count">Answered & Marked for Review: <span
+                    class="answered-marked-for-review-number">0</span></div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="question-numbers" id="question-numbers"></div>
+        </div>
+      </div>
+
+      <div class="question-area">
+
+        <div class="question-area-inner btn-seprator">
+          <div class="part1">
+            <h2 id="question-number">Question 1:</h2>
+            <p id="question-text"><strong>The characteristic distance at which quantum gravitational
+                effects
+                are
+                significant, the Planck length, can be determined from a suitable combination of the
+                fundamental
+                physical constants G, h, and c. Which of the following correctly gives the Planck
+                length?</strong></p>
+            <div class="options">
+              <label>
+                <input type="radio" name="answer" value="answer1"> (1) Gh23
+              </label><br>
+              <label>
+                <input type="radio" name="answer" value="answer2"> (2) G²hc
+              </label><br>
+              <label>
+                <input type="radio" name="answer" value="answer3"> (3) Gh24
+              </label><br>
+              <label>
+                <input type="radio" name="answer" value="answer4"> (4) Gh25
+              </label><br>
+            </div>
+          </div>
+          <div class="part1">
+            <div class="navigation">
+              <button class="btn back" id="back-btn">&lt;&lt; Back</button>
+              <button class="btn next" id="next-btn">Next &gt;&gt;</button>
+              <button class="btn submit" onclick="submitAnswer()">Submit</button>
+
+              <!-- <button class="btn clear" onclick="clearAnswers()">Clear</button> -->
+              <button class="btn mark-review" id="mark-review-btn">Mark for Review</button>
+
+              <button id="end-test-btn" class="end-test-btn">End Test</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="camera">
+        <video id="liveCamera" autoplay muted playsinline></video>
+      </div>
+
+    </div>
+  </div>
+  <div id="warningModal" class="modal">
+    <span id="modalMessage">Warning Message</span>
+    <button id="okButton">OK</button>
+  </div>
+
+  <script>
+    // End Exam Button Click Event
+    // End Exam Button Click Event
+
+
+    document.getElementById('end-test-btn').addEventListener('click', function () {
+      const confirmEnd = confirm("Are you sure you want to end the exam?");
+      if (confirmEnd) {
+        // Send data to the backend here
+        sendTestResultsToBackend();
+        // window.location.href = "userDash.html"; // Redirect to exam-history page
+      }
+    });
+
+    // function sendTestResultsToBackend() {
+    //   // Prepare the payload (this is the questions array with updated answers)
+    //   const testData = questions.map(question => ({
+    //     question_id: question.question_id,
+    //     user_option: question.user_option, // The selected option
+    //     is_attempt: question.is_attempt,   // Whether the question was attempted
+    //   }));
+
+    //   // Send a POST request with the test results
+    //   fetch('http://127.0.0.1:3000/api/submitTestResults', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       user_id: document.getElementById("userId").innerText,  // Get user ID from the DOM
+    //       results: testData,  // Send the test results
+    //     }),
+    //   })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log('Test results submitted successfully:', data);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error submitting test results:', error);
+    //   });
+    // }
+
+
+
+    function sendTestResultsToBackend() {
+      const testData = questions.map(q => ({
+          question_id: q.question_id,
+          user_option: q.user_option || "N/A",
+          is_attempt: q.is_attempt ?? false
+      }));
+  
+      const userId = document.getElementById("userId")?.innerText.trim();
+      if (!userId || testData.length === 0) {
+          console.error("❌ Error: Missing user ID or test data.");
+          alert("⚠ Error: User ID or test data is missing.");
+          return;
+      }
+  
+      console.log("📡 Sending Test Results...");
+      fetch('http://127.0.0.1:5000/api/submitTestResults', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: userId, results: testData })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP Error! Status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('✅ Test results submitted successfully:', data);
+          
+          if (data.redirect) {
+              console.log("🔄 Redirecting to result page:", data.redirect);
+              
+              // ✅ Fix: Use window.location.replace to ensure correct redirection
+              setTimeout(() => {
+                  window.location.replace(data.redirect);
+              }, 3000);  // Wait 3 seconds before redirecting for better UX
+          } else {
+              console.error("⚠ Error: No redirect URL received.");
+              alert("⚠ Error: Could not generate test results.");
+          }
+      })
+      .catch(error => {
+          console.error('❌ Error submitting test results:', error);
+          alert("⚠ Failed to submit test results. Check console for details.");
+      });
+  }
+  
+  
+  
+  
+
+
+
+
+
+    // Function to handle answer submission
+    function submitAnswer() {
+      // Disable all radio buttons for the current question
+      const currentQuestionRadioButtons = document.querySelectorAll(`#question-${currentQuestion} input[type="radio"]`);
+
+      currentQuestionRadioButtons.forEach(radio => {
+        radio.disabled = true; // Disable the radio button for the current question
+      });
+
+      // Mark the current question as submitted
+      questions[currentQuestion - 1].isSubmit = true;  // Set the current question as submitted
+      updateCounts(); // Update the counts of answered and submitted questions
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("✅ Loading user profile for exam page...");
+  
+      // ✅ Retrieve user data from localStorage
+      const user = JSON.parse(localStorage.getItem("user"));
+  
+      if (user && user.firstName && user.lastName) {
+          console.log("✅ User found:", user);
+  
+          // ✅ Update User ID
+          document.getElementById("userId").textContent = user.id;
+  
+          // ✅ Update Username in Exam Page
+          document.querySelector(".username").textContent = `${user.firstName} ${user.lastName}`;
+      } else {
+          console.warn("⚠ No user data found in localStorage.");
+  
+          // ✅ Default values if no user found
+          document.getElementById("userId").textContent = "N/A";
+          document.querySelector(".username").textContent = "Guest User";
+      }
+  });
+  
+
+
+
+    let questions = [];  // Initialize an empty array to store the questions
+    let totalQuestions =
+      // Fetch raw data from the backend API
+      fetch('http://127.0.0.1:5000/api/questions')  // Ensure your API endpoint is correct
+        .then(response => response.json())  // Convert the response to JSON
+        .then(questions1 => {
+          console.log('Fetched Questions:', questions1);
+
+          // Map the fetched data to the desired structure and store it in the 'questions' variable
+          questions = questions1.map(q => ({
+            question: q.question_description,  // Map question_description to "question"
+            options: [
+              q.answer1,
+              q.answer2,
+              q.answer3,
+              q.answer4
+            ],  // Map answer1, answer2, answer3, answer4 to "options"
+            isSubmit: false,
+            question_id: q.question_id,
+            is_attempt: false,
+            user_option: null
+          }));
+
+          console.log("Formatted questions array:", questions);  // Log the formatted questions
+
+
+
+          totalQuestions = questions.length;
+          if (totalQuestions > 0) {
+            generateQuestionNumbers(); // Generate question numbers after fetching questions
+            updateQuestion(); // Update the first question when data is ready
+          } else {
+            console.log('No questions found.');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching questions:', error);  // Handle any error during fetch
+        });
+
+
+
+
+
+
+
+    let currentQuestion = 1;
+
+    const questionNumbersContainer = document.getElementById('question-numbers');
+    const questionNumberDisplay = document.getElementById('question-number');
+    const questionTextDisplay = document.getElementById('question-text');
+
+    let visitedQuestions = Array(totalQuestions).fill(false);
+    let answeredQuestions = Array(totalQuestions).fill(false);
+    let markedForReview = Array(totalQuestions).fill(false);
+    let userResponses = Array(totalQuestions).fill(null); // Store user responses
+
+    // Timer setup (60 minutes)
+    // let totalTime = 20 * 1000; 
+    let totalTime = 60 * 60 * 1000;
+    let startTime = localStorage.getItem('startTime') ? parseInt(localStorage.getItem('startTime')) : Date.now();
+    let endTime = startTime + totalTime;
+
+    // let fiveMinutesAlertShown = false; // Flag to ensure alert only shows once
+
+    // function updateTimer() {
+    //     let remainingTime = endTime - Date.now();
+    //     if (remainingTime <= 0) {
+    //         alert("Time's up!");
+    //         clearInterval(timerInterval);
+    //     } else {
+    //         let minutes = Math.floor(remainingTime / 60000);
+    //         let seconds = Math.floor((remainingTime % 60000) / 1000);
+    //         document.getElementById('timer').textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    //         // Check if 5 minutes remain
+    //         if (minutes === 5 && !fiveMinutesAlertShown) {
+    //             alert("You have 5 minutes remaining!");
+    //             fiveMinutesAlertShown = true; // Prevent further alerts
+    //         }
+    //     }
+    // }
+
+    // localStorage.setItem('endTime', endTime);
+    // const timerInterval = setInterval(updateTimer, 1000);
+    // updateTimer();
+
+
+    // Timer setup (6 minutes)
+    // let totalTime = 312000 // 6 minutes in milliseconds
+    // let startTime = localStorage.getItem('startTime') ? parseInt(localStorage.getItem('startTime')) : Date.now();
+    // let endTime = startTime + totalTime;
+
+    let fiveMinutesAlertShown = false; // Flag to ensure alert only shows once
+
+    function updateTimer() {
+      let remainingTime = endTime - Date.now();
+
+      if (remainingTime <= 0) {
+
+
+        // Send data to the backend here
+        sendTestResultsToBackend();
+        // window.location.href = "userDash.html"; // Redirect to exam-history page
+
+        clearInterval(timerInterval);
+      } else {
+        let minutes = Math.floor(remainingTime / 60000);
+        let seconds = Math.floor((remainingTime % 60000) / 1000);
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        // Check if 5 minutes remain (exactly 5 minutes or slightly over 5 minutes)
+        if (remainingTime <= 5 * 60 * 1000 && !fiveMinutesAlertShown) {
+          alert("You have 5 minutes remaining!");
+          fiveMinutesAlertShown = true; // Prevent further alerts
+
+          // Change the timer color to red
+          timerElement.style.color = 'red';
+        }
+      }
+    }
+
+    localStorage.setItem('endTime', endTime);
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+
+
+
+
+
+    // Generate Question Numbers
+    function generateQuestionNumbers() {
+      for (let i = 1; i <= totalQuestions; i++) {
+        const div = document.createElement('div');
+        div.classList.add('question-number');
+        div.textContent = i;
+
+        div.addEventListener('click', function () {
+          markVisited(currentQuestion);
+          currentQuestion = i;
+          updateQuestion(false); // No need to disable radio buttons
+        });
+
+        questionNumbersContainer.appendChild(div);
+      }
+    }
+
+
+
+    function updateQuestion(disable = false) {
+      console.log("Updating question: " + currentQuestion);
+      questionNumberDisplay.textContent = 'Question ' + currentQuestion;
+      questionTextDisplay.innerHTML = `<strong>${questions[currentQuestion - 1].question}</strong>`;
+
+      const options = questions[currentQuestion - 1].options;
+      let optionsHtml = "";
+
+      options.forEach((option, index) => {
+        const isChecked = userResponses[currentQuestion - 1] === index + 1 ? "checked" : "";
+        const isDisabled = questions[currentQuestion - 1].isSubmit || disable ? "disabled" : ""; // Disable if already submitted or forced disable
+
+        optionsHtml += `<label>
+        <input type="radio" name="answer-${currentQuestion}" class="question-${currentQuestion}" value="${index + 1}" onclick="markAnswered(${currentQuestion}, ${index + 1},'answer' + (${index + 1}))" ${isChecked} ${isDisabled}>
+        (${index + 1}) ${option}
+    </label><br>`;
+      });
+
+      document.querySelector('.options').innerHTML = optionsHtml;
+      updateQuestionNumbers();  // Call this here to ensure colors update immediately
+      updateCounts();           // Update counts of answered, not answered, etc.
+    }
+
+
+
+
+
+    // Update Question Numbers with Colors
+    function updateQuestionNumbers() {
+      const questionNumbers = document.querySelectorAll('.question-number');
+
+      questionNumbers.forEach((q, index) => {
+        q.classList.remove('selected', 'not-visited', 'marked-review');
+
+        if (markedForReview[index]) {
+          q.style.backgroundColor = "#ffa500"; // Orange - Marked for Review
+        } else if (answeredQuestions[index]) {
+          q.style.backgroundColor = "#008000"; // Green - Answered
+        } else if (visitedQuestions[index]) {
+          q.style.backgroundColor = "#ff0000"; // Red - Visited but not answered
+        } else {
+          q.style.backgroundColor = "#0004ff"; // Blue - Default (Not Visited)
+        }
+      });
+    }
+
+    // Mark as Visited
+    function markVisited(questionNumber) {
+      visitedQuestions[questionNumber - 1] = true;
+      updateQuestionNumbers();  // Ensure question number color is updated when visited
+    }
+
+
+    // // Mark as Answered (Disable radio buttons only after Submit)
+    // function markAnswered(questionNumber, selectedOption) {
+    //   if (questions[questionNumber - 1].isSubmit) {
+    //     return; // Don't allow changes if the question is already submitted
+    //   }
+
+    //   userResponses[questionNumber - 1] = selectedOption; // Save Response
+    //   answeredQuestions[questionNumber - 1] = true; // Mark as Answered
+    //   updateCounts(); // Update counts
+    // }
+
+    // Function to mark an answer for a particular question
+    function markAnswered(questionNumber, selectedOption, userOption) {
+      // Store the selected option and mark the question as attempted
+      if (questions[questionNumber - 1].isSubmit) {
+        return; // Don't allow changes if the question is already submitted
+      }
+      questions[questionNumber - 1].user_option = userOption;  // Store the selected radio value
+      questions[questionNumber - 1].is_attempt = true;  // Mark question as attempted
+      userResponses[questionNumber - 1] = selectedOption;
+      // Optionally, mark the question as answered
+      answeredQuestions[questionNumber - 1] = true;
+      // console.log("updated array"+questions)
+      // console.log("********************************")
+      console.log(JSON.stringify(questions));  // No indentation, single line
+      // This will format the output nicely
+
+      // Update the counts (e.g., answered, unattempted, etc.)
+      updateCounts();
+    }
+
+
+
+
+    // Mark for Review
+    function markForReview(questionNumber) {
+      markedForReview[questionNumber - 1] = !markedForReview[questionNumber - 1]; // Toggle
+      updateCounts();
+      updateQuestionNumbers();
+    }
+
+    // Update Status Counts
+    function updateCounts() {
+      const notVisited = visitedQuestions.filter(visited => !visited).length;
+      const notAnswered = answeredQuestions.filter(answered => !answered).length;
+      const answered = answeredQuestions.filter(answered => answered).length;
+      const markedForReviewCount = markedForReview.filter(marked => marked).length;
+      const answeredAndMarkedForReview = answeredQuestions.filter((answered, index) => answered && markedForReview[index]).length;
+
+      document.getElementById('not-visited-count').innerHTML = `Not Visited: <span class="not-visited-number">${notVisited}</span>`;
+      document.getElementById('not-answered-count').innerHTML = `Not Answered: <span class="not-answered-number">${notAnswered}</span>`;
+      document.getElementById('answered-count').innerHTML = `Answered: <span class="answered-number">${answered}</span>`;
+      document.getElementById('marked-for-review-count').innerHTML = `Marked for Review: <span class="marked-for-review-number">${markedForReviewCount}</span>`;
+      document.getElementById('answered-marked-for-review-count').innerHTML = `Answered & Marked for Review: <span class="answered-marked-for-review-number">${answeredAndMarkedForReview}</span>`;
+    }
+
+
+
+    //Next Button
+    document.getElementById('next-btn').addEventListener('click', function () {
+      if (currentQuestion < totalQuestions) {
+        markVisited(currentQuestion);
+        currentQuestion++;
+        updateQuestion(); // Ensure colors are updated when moving to the next question
+      }
+    });
+
+    // Back Button
+    document.getElementById('back-btn').addEventListener('click', function () {
+      if (currentQuestion > 1) {
+        markVisited(currentQuestion);
+        currentQuestion--;
+        updateQuestion(); // Ensure colors are updated when moving to the previous question
+      }
+    });
+
+
+    // Mark for Review Button
+    document.getElementById('mark-review-btn').addEventListener('click', function () {
+      markForReview(currentQuestion);
+    });
+
+    // Submit Button Handler
+    document.querySelector('.btn.submit').addEventListener('click', function () {
+      submitAnswer(); // Disable all radio buttons when Submit is clicked
+    });
+
+    // Clear Answer
+    function clearAnswers() {
+      // Get all the radio buttons for the current question
+      const currentQuestionRadioButtons = document.querySelectorAll(`.question-${currentQuestion} input[type="radio"]`);
+
+      // Check if any of the radio buttons are disabled for the current question
+      const isDisabled = Array.from(currentQuestionRadioButtons).some(radio => radio.disabled);
+
+      // If the radio buttons are disabled (i.e., question is submitted), return without clearing the answers
+      if (isDisabled) {
+        return;
+      }
+
+      // Clear the selected radio button for the current question
+      currentQuestionRadioButtons.forEach(input => {
+        input.checked = false; // Uncheck all radio buttons for the current question
+      });
+
+      // Reset the response and mark the question as unanswered
+      userResponses[currentQuestion - 1] = null;
+      answeredQuestions[currentQuestion - 1] = false;
+
+      // Update the counts and status
+      updateCounts();
+    }
+
+
+    const socket = io.connect('http://127.0.0.1:5000');
+    let faceWarningCount = 0;
+    let mobileWarningCount = 0;
+    let tabSwitchWarningCount = 0;
+    let totalWarnings = 0;  // Track total warnings
+    const maxWarnings = 5;  // Set max warnings to 5
+
+    async function initializeDetection() {
+      await setupCamera();
+      const faceModel = await blazeface.load();
+      console.log("BlazeFace Model Loaded!");
+      detectFaces(faceModel);
+      detectMobileDevice();
+    }
+
+    // Set up the webcam feed
+    async function setupCamera() {
+      const video = document.getElementById('liveCamera');
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+      } catch (error) {
+        console.error('Error accessing webcam:', error);
+        alert("Camera access failed. Please check your permissions.");
+      }
+    }
+
+    // Detect faces
+    async function detectFaces(model) {
+      const video = document.getElementById('liveCamera');
+      const faces = await model.estimateFaces(video);
+
+      // Check if more than 1 face is detected
+      if (faces.length > 1 && faceWarningCount < maxWarnings) {
+        faceWarningCount++;
+        totalWarnings++; // Increment total warnings
+        showModal(`⚠️ Multiple faces detected! Warning.`);
+
+        socket.emit("warning", "⚠️ Multiple faces detected! Please ensure only one person is in view.");
+        checkWarnings();  // Check if we reached max warnings
+      }
+
+      // Detect faces every second (1000ms)
+      setTimeout(() => detectFaces(model), 1000);
+    }
+
+    // Detect mobile devices
+    async function detectMobileDevice() {
+      const model = await cocoSsd.load();
+      console.log("COCO-SSD Model Loaded!");
+
+      setInterval(async () => {
+        const video = document.getElementById('liveCamera');
+        const predictions = await model.detect(video);
+        const mobilePhones = predictions.filter(pred => pred.class === 'cell phone');
+
+        // Check for mobile device in the frame
+        if (mobilePhones.length > 0 && mobileWarningCount < maxWarnings) {
+          mobileWarningCount++;
+          totalWarnings++; // Increment total warnings
+          showModal(`⚠️ Mobile device detected! Warning.`);
+          socket.emit("warning", "⚠️ Mobile device detected! Please remove it from the view.");
+          checkWarnings();  // Check if we reached max warnings
+        }
+      }, 1000);
+    }
+
+    // Detect tab switching
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        tabSwitchWarningCount++;
+        totalWarnings++; // Increment total warnings
+        if (tabSwitchWarningCount <= maxWarnings) {
+          showModal(`⚠️ Tab switched! Warning.`);
+          socket.emit("warning", "⚠️ Tab switched! Please stay on the exam page.");
+          checkWarnings();  // Check if we reached max warnings
+        }
+      }
+    });
+
+    // Function to display the warning modal at the top center
+    function showModal(message) {
+      const modalMessage = document.getElementById("modalMessage");
+      const modal = document.getElementById("warningModal");
+      const okButton = document.getElementById("okButton");
+
+      // Set the message inside the modal
+      modalMessage.textContent = message;
+
+      // Display the modal with a smooth transition
+      modal.style.display = "block";
+      modal.style.opacity = "1";
+
+      // Automatically hide the modal after 5 seconds (optional)
+      setTimeout(function () {
+        modal.style.display = "none";
+        modal.style.opacity = "0"; // Fade out
+      }, 5000); // 5 seconds
+
+      // Handle OK button click
+      okButton.onclick = function () {
+        modal.style.display = "none";
+        modal.style.opacity = "0"; // Fade out when closed by user
+      };
+    }
+
+    let warningCount = 0;  // Global variable to track the number of warnings
+
+    // Add this function to detect if the camera is showing a black screen
+    function checkBlackScreen() {
+      const video = document.getElementById('liveCamera');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const pixels = imageData.data;
+
+      let totalBrightness = 0;
+      let pixelCount = pixels.length / 4;
+
+      // Calculate average brightness of the pixels
+      for (let i = 0; i < pixels.length; i += 4) {
+        const r = pixels[i];     // Red value
+        const g = pixels[i + 1]; // Green value
+        const b = pixels[i + 2]; // Blue value
+
+        // Convert RGB to brightness (using a simple formula)
+        const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+        totalBrightness += brightness;
+      }
+
+      const averageBrightness = totalBrightness / pixelCount;
+
+      // If the average brightness is below a threshold, consider it a black screen
+      if (averageBrightness < 10) {  // Adjust this threshold as needed
+        showModal('⚠️ Camera is not visible! Please ensure the camera is set correctly.');
+        socket.emit("warning", "⚠️ Camera is not visible! Please set the camera.");
+      }
+    }
+
+    // Modify the initialization function to include the black screen check
+    async function initializeDetection() {
+      await setupCamera();
+      const faceModel = await blazeface.load();
+      console.log("BlazeFace Model Loaded!");
+      detectFaces(faceModel);
+      detectMobileDevice();
+
+      // Check for black screen every 1 second
+      setInterval(checkBlackScreen, 1000);
+    }
+
+    // Check if the total warnings exceed the limit
+    function checkWarnings() {
+      if (totalWarnings >= maxWarnings) {
+        endExam();  // End the exam after max warnings
+      }
+    }
+
+    // End the exam and redirect
+    function endExam() {
+      alert("You have reached the maximum number of warnings. The exam will now end.");
+      window.location.href = "userDash.html"; // Redirect to the monitor page
+    }
+
+
+    // Call the initialization function when the page loads
+    window.onload = initializeDetection;
+  </script>
+  <script src="../scripts/UD_dynamic_name.js" defer></script>
+
+</body>
+
+</html>

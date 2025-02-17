@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vidyank</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *:before,
+    *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background-color: #1f2937;
+      color: rgb(255, 255, 255);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* font-weight: 700; */
+    }
+
+    /* Background shapes */
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: moveAround 8s infinite ease-in-out alternate, rotateShape 6s infinite linear;
+    }
+
+    /* First Shape */
+    .shape:first-child {
+      background: linear-gradient(to bottom right, #14b8a6, #312e81);
+      left: -100px;
+      top: 50px;
+      animation-delay: 0s;
+    }
+
+    /* Second Shape */
+    .shape:last-child {
+      background: linear-gradient(to right, #f97316, #facc15);
+      right: -50px;
+      bottom: 50px;
+      animation-delay: 2s;
+    }
+
+    /* Keyframes for large movement */
+    @keyframes moveAround {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      20% {
+        transform: translate(100px, -80px) scale(1.2);
+      }
+
+      40% {
+        transform: translate(-120px, 90px) scale(1);
+      }
+
+      60% {
+        transform: translate(80px, -60px) scale(0.9);
+      }
+
+      80% {
+        transform: translate(-90px, 110px) scale(1.3);
+      }
+
+      100% {
+        transform: translate(50px, -50px) scale(1);
+      }
+    }
+
+
+    form {
+      width: 700px;
+      background-color: rgba(255, 255, 255, 0.13);
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+      padding: 25px;
+    }
+
+    form * {
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      outline: none;
+      border: none;
+    }
+
+    form h3 {
+      font-size: 25px;
+      font-weight: 500;
+      line-height: 42px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    input {
+      display: block;
+      height: 40px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 3px;
+      padding: 0 10px;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    ::placeholder {
+      color: #ffffffbb;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #ffffff;
+      color: #080710;
+      padding: 10px 0;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .flash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+      animation: flash-fade 5s forwards;
+    }
+
+    @keyframes flash-fade {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    select {
+      display: block;
+      height: 40px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 3px;
+      padding: 0 10px;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      color: #ffffff;
+      appearance: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select option {
+      background-color: #47464d;
+      color: #ffffff;
+    }
+
+    .otp-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .otp-container input {
+      width: 80%;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 3px;
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: 300;
+      color: #ffffff;
+    }
+
+    .otp-container button {
+      width: 20%;
+      height: 40px;
+      background-color: #cf7f1c;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .otp-container button:hover {
+      background-color: #e6a519;
+    }
+
+    .checkbox-container {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-container label {
+      font-size: 14px;
+      color: #ffffff;
+    }
+
+    .checkbox-container a {
+      color: #cf7f1c;
+      text-decoration: none;
+    }
+
+    .checkbox-container a:hover {
+      text-decoration: underline;
+    }
+
+    /* Default Select Styling */
+    select {
+      display: block;
+      height: 40px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 3px;
+      padding: 0 10px;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      color: #ffffff;
+      appearance: none;
+      outline: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      /* Default border */
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Highlight when a value is selected */
+    select.filled {
+      border-color: #ffffff !important;
+      /* Yellow border */
+      background-color: rgba(255, 255, 255, 0.788) !important;
+      /* Light yellow background */
+      color: black;
+    }
+
+    /* Password Container */
+    .password-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-container input {
+      width: 100%;
+      padding-right: 40px;
+      /* Space for the eye icon */
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+      color: #ffffff;
+    }
+
+    .toggle-password i {
+      font-size: 18px;
+    }
+
+    .toggle-password:hover {
+      color: #facc15;
+      /* Yellow hover effect */
+    }
+
+    /* Select Container */
+    .select-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Style the Select Box */
+    .select-container select {
+      display: block;
+      height: 40px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 3px;
+      padding: 0 35px 0 10px;
+      /* Space for arrow */
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      color: #ffffff;
+      appearance: none;
+      /* Hide default browser arrow */
+      outline: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Down Arrow Icon */
+    .select-container::after {
+      content: "▼";
+      /* Unicode for down arrow */
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ffffff;
+      font-size: 14px;
+      pointer-events: none;
+      /* Prevent click interference */
+    }
+
+    /* Highlight when a value is selected */
+    select.filled {
+      border-color: #ffffff !important;
+      background-color: rgba(255, 255, 255, 0.788) !important;
+      color: black;
+    }
+
+    @media screen and (max-width: 1024px) {
+      form {
+        width: 90%;
+        padding: 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      input,
+      select,
+      button {
+        font-size: 16px;
+        height: 45px;
+      }
+
+      .password-container input {
+        padding-right: 50px;
+      }
+
+      .toggle-password {
+        right: 15px;
+      }
+
+      .otp-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .otp-container input {
+        width: 100%;
+      }
+
+      .otp-container button {
+        width: 100%;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      form {
+        width: 95%;
+        padding: 15px;
+      }
+
+      h3 {
+        font-size: 22px;
+      }
+
+      label {
+        font-size: 14px;
+      }
+
+      input,
+      select {
+        font-size: 14px;
+        height: 40px;
+      }
+
+      .toggle-password {
+        right: 12px;
+      }
+
+      button {
+        font-size: 16px;
+        height: 45px;
+      }
+
+      .checkbox-container label {
+        font-size: 12px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      form {
+        width: 100%;
+        padding: 10px;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      h3 {
+        font-size: 20px;
+      }
+
+      label {
+        font-size: 12px;
+      }
+
+      input,
+      select {
+        font-size: 14px;
+        height: 38px;
+      }
+
+      .toggle-password {
+        font-size: 16px;
+        right: 10px;
+      }
+
+      button {
+        font-size: 14px;
+        height: 40px;
+      }
+
+      .checkbox-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .checkbox-container input {
+        width: 15px;
+        height: 15px;
+      }
+
+      .checkbox-container label {
+        font-size: 11px;
+      }
+    }
+
+    /* Style the Select Container */
+    .select-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Style the Select Box */
+    .select-container select {
+      display: block;
+      height: 40px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 3px;
+      padding: 0 35px 0 10px;
+      /* Space for arrow */
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      /* color: #ffffff; */
+      appearance: none;
+      /* Hide default browser arrow */
+      outline: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* Down Arrow Icon */
+    .select-container::after {
+      content: "▼";
+      /* Unicode for down arrow */
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ffffff;
+      font-size: 14px;
+      pointer-events: none;
+      /* Prevent click interference */
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    // Wait for DOM to load before attaching event listeners
+    document.addEventListener("DOMContentLoaded", async function () {
+      try {
+          const response = await fetch("http://localhost:5000/api/categories");
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const categories = await response.json();
+  
+          console.log("✅ Categories Fetched:", categories); // Debugging
+  
+          const categoryDropdown = document.getElementById("category");
+          if (!categoryDropdown) {
+              console.error("❌ categoryDropdown NOT FOUND in DOM! Check your HTML.");
+              return;
+          }
+  
+          categoryDropdown.innerHTML = ""; // Clear previous options
+  
+          if (categories.length === 0) {
+              console.warn("⚠ No categories found!"); // Debugging
+          }
+  
+          categories.forEach(category => {
+              const option = document.createElement("option");
+              option.value = category.category_id; // Keep category_id
+              option.textContent = category.name; // ✅ Use 'name' instead of 'category_name'
+              categoryDropdown.appendChild(option);
+          });
+  
+      } catch (error) {
+          console.error("❌ Error fetching categories:", error);
+      }
+  });
+  
+  
+  
+  </script>
+
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <div id="popup-form" class="popup">
+    <div class="popup-content">
+
+      <form>
+        <h3 style="font-weight:700;">Register</h3>
+
+        <div class="form-grid" style="margin-top: 20px;">
+          <div>
+            <label for="first-name">First Name</label>
+            <input type="text" placeholder="Enter First Name" id="first-name" required>
+          </div>
+          <div>
+            <label for="last-name">Last Name</label>
+            <input type="text" placeholder="Enter Last Name" id="last-name" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" placeholder="example@email.com" id="email" required>
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+            <div class="password-container">
+              <input type="password" placeholder="Enter Password" id="password" required>
+              <span class="toggle-password" onclick="togglePasswordVisibility()">
+                <i id="eye-icon" class="fas fa-eye"></i>
+              </span>
+            </div>
+          </div>
+          <div>
+            <label for="city">City</label>
+            <input type="text" placeholder="Enter your city" id="city" required>
+          </div>
+          <div>
+            <label for="contact">Contact Number</label>
+            <input type="text" placeholder="Mobile No" id="contact" required>
+          </div>
+
+          <div class="select-container">
+            <label for="category">Category</label>
+            <select id="category" >
+              <option value="">Loading categories...</option> <!-- Placeholder until data loads -->
+            </select>
+          </div>
+
+          <div class="select-container">
+            <label for="referral-source">How did you hear about vidyȧक?</label>
+            <select id="referral-source" required>
+              <option value="social Media">Social Media</option>
+              <option value="friends">Friends</option>
+              <option value="teacher">Teacher</option>
+              <option value="internet">Internet</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="otp">OTP</label>
+            <input type="text" placeholder="Enter OTP" id="otp" required>
+            <button type="button" id="send-otp-btn">Send OTP</button>
+          </div>
+
+          <div>
+            <label for="institute_name">Institute / Class Name </label>
+            <input type="text" placeholder="Enter institute / class name" id="institute_class_name" />
+            <div class="checkbox-container">
+              <input type="checkbox" id="terms" required>
+              <label for="terms">I accept the <a href="#">Terms and Conditions</a></label>
+            </div>
+          </div>
+        </div>
+
+        <button style="margin-bottom: 20px;" type="submit" id="register-btn">Register</button>
+        <label style="text-align: center;"> <a style="color: white;" href="./login.html">Already Registered?
+            Login</a></label>
+      </form>
+
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

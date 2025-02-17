@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe & Pricing</title>
+
+    <link rel="stylesheet" href="../styles/userDash.css">
+    <style>
+        body {
+            background-color: #47464d;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 70%;
+            max-width: 1200px;
+            height: auto;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .price-container {
+            width: 30%;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .price-container:hover {
+            transform: translateY(-10px);
+        }
+
+        .price-container h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .price-container p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .price-container .price {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .price-container .benefits {
+            text-align: left;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        .benefits li {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .col {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .col2 {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="col">
+            <div class="price-container">
+                <h2>Silver</h2>
+                <p>Test series for basic level preparation with full access to all topics.</p>
+                <div class="price">$19.99</div>
+                <ul class="benefits">
+                    <li>Basic level tests</li>
+                    <li>Access to all topics</li>
+                    <li>Instant results and feedback</li>
+                </ul>
+                <button id="buy-silver">Buy Now</button>
+            </div>
+
+            <div class="price-container">
+                <h2>Gold</h2>
+                <p>Advanced test series to help you hone your skills and improve your score.</p>
+                <div class="price">$39.99</div>
+                <ul class="benefits">
+                    <li>Advanced level tests</li>
+                    <li>Personalized progress tracking</li>
+                    <li>Priority customer support</li>
+                </ul>
+                <button id="buy-gold">Buy Now</button>
+            </div>
+
+            <div class="price-container">
+                <h2>Diamond</h2>
+                <p>Complete test series with personalized assessments and expert guidance.</p>
+                <div class="price">$59.99</div>
+                <ul class="benefits">
+                    <li>Complete access to all tests</li>
+                    <li>Expert feedback on every test</li>
+                    <li>Access to exclusive content</li>
+                    <li>Dedicated mentor support</li>
+                </ul>
+                <button id="buy-diamond">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="col2">
+            <button id="skip">Continue for free</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add event listeners to the buttons
+            const buyButtons = document.querySelectorAll('.buy-now');
+            buyButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    alert('Redirecting to purchase page...');
+                    // You can redirect to the desired page here, e.g., window.location.href = "userDash.html";
+                });
+            });
+
+            // Skip button event listener
+            const skipButton = document.getElementById('skip');
+            skipButton.addEventListener('click', function () {
+                alert('Redirecting to free access...');
+                // You can redirect to a free access page here, e.g., window.location.href = "freeAccess.html";
+            });
+        });
+    </script>
+
+</body>
+
+</html>

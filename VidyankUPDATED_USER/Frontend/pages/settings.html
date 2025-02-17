@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="../styles/userDash.css">
+  <style>
+    .settings-page {
+      width: 90%;
+      /* max-width: 1200px; */
+      display: flex;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.1);
+      /* Transparency */
+      backdrop-filter: blur(10px);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      padding: 40px;
+      /* overflow: hidden; */
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+      width: 100%;
+    }
+
+    /* Left Container for Notification Settings */
+    .left-container {
+      width: 48%;
+      padding-right: 10px;
+    }
+
+    /* Right Container for Account, Share & Rate, Legal */
+    .right-container {
+      width: 48%;
+      padding-left: 10px;
+    }
+
+    .setting-section {
+      margin-bottom: 30px;
+    }
+
+    .setting-section h2 {
+      font-size: 20px;
+      color: white;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .setting-item {
+      margin: 15px 0;
+      padding: 10px;
+
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .setting-item:hover {
+      background-color: white;
+      color: black;
+    }
+
+    .setting-item #privacy-policy {
+      width: 95%;
+      padding: 12px;
+    }
+
+    label {
+      font-size: 16px;
+      color: white;
+      margin-right: 10px;
+    }
+
+    input[type="checkbox"] {
+      margin-left: 10px;
+    }
+
+    button,
+    a {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover,
+    a:hover {
+      background-color: white;
+      color: black;
+    }
+
+    /* Adjustments for smaller screens */
+    @media (max-width: 768px) {
+      .settings-page {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      .left-container,
+      .right-container {
+        width: 100%;
+        padding: 0;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .setting-section h2 {
+        font-size: 18px;
+      }
+
+      button,
+      a {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="settings-page">
+    <h1>Settings</h1>
+
+    <!-- Left Container for Notification Settings -->
+    <div class="left-container">
+      <div class="setting-section">
+        <h2>Notification Settings</h2>
+        <div class="setting-item">
+          <label for="notifications">Enable Notifications</label>
+          <input type="checkbox" id="notifications" checked>
+        </div>
+        <div class="setting-item">
+          <label for="exam-reminder">Exam Reminders</label>
+          <input type="checkbox" id="exam-reminder" checked>
+        </div>
+        <div class="setting-item">
+          <label for="result-notifications">Result Notifications</label>
+          <input type="checkbox" id="result-notifications" checked>
+        </div>
+        <div class="setting-item">
+          <label for="test-series-updates">Test Series Updates</label>
+          <input type="checkbox" id="test-series-updates" checked>
+        </div>
+        <div class="setting-item">
+          <label for="announcement-notifications">Announcement Notifications</label>
+          <input type="checkbox" id="announcement-notifications" checked>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Container for Account, Share & Rate, Legal -->
+    <div class="right-container">
+      <!-- Account Settings -->
+      <div class="setting-section">
+        <h2>Account Settings</h2>
+        <div class="setting-item">
+          <button id="forgot-password">Reset Password</button>
+        </div>
+        <div class="setting-item">
+          <button id="sign-out">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- Share & Rate -->
+      <div class="setting-section">
+        <h2>Share & Rate</h2>
+        <div class="setting-item">
+          <button id="share-profile">Share Profile</button>
+        </div>
+        <div class="setting-item">
+          <button id="rate-us">Rate Us</button>
+        </div>
+      </div>
+
+      <!-- Privacy Policy -->
+      <div class="setting-section">
+        <h2>Legal</h2>
+        <div class="setting-item">
+          <a href="/privacy-policy" id="privacy-policy">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Notification Settings
+    const notificationToggle = document.getElementById('notifications');
+    const examReminderToggle = document.getElementById('exam-reminder');
+    const resultNotificationsToggle = document.getElementById('result-notifications');
+    const testSeriesUpdatesToggle = document.getElementById('test-series-updates');
+    const announcementNotificationsToggle = document.getElementById('announcement-notifications');
+
+    notificationToggle.addEventListener('change', (e) => {
+      const isEnabled = e.target.checked;
+      console.log(`Notifications are ${isEnabled ? 'enabled' : 'disabled'}`);
+      // Save preference to the backend or local storage
+    });
+
+    examReminderToggle.addEventListener('change', (e) => {
+      const isEnabled = e.target.checked;
+      console.log(`Exam reminders are ${isEnabled ? 'enabled' : 'disabled'}`);
+    });
+
+    resultNotificationsToggle.addEventListener('change', (e) => {
+      const isEnabled = e.target.checked;
+      console.log(`Result notifications are ${isEnabled ? 'enabled' : 'disabled'}`);
+    });
+
+    testSeriesUpdatesToggle.addEventListener('change', (e) => {
+      const isEnabled = e.target.checked;
+      console.log(`Test series updates are ${isEnabled ? 'enabled' : 'disabled'}`);
+    });
+
+    announcementNotificationsToggle.addEventListener('change', (e) => {
+      const isEnabled = e.target.checked;
+      console.log(`Announcement notifications are ${isEnabled ? 'enabled' : 'disabled'}`);
+    });
+
+    // Forgot Password
+    document.getElementById('forgot-password').addEventListener('click', () => {
+      window.location.href = '/forgot-password'; // Redirect to forgot password page
+    });
+
+    // Share Profile
+    document.getElementById('share-profile').addEventListener('click', () => {
+      const profileLink = 'https://your-portal.com/profile'; // Replace with actual profile link
+      navigator.clipboard.writeText(profileLink).then(() => {
+        alert('Profile link copied to clipboard!');
+      });
+    });
+
+    // Rate Us
+    document.getElementById('rate-us').addEventListener('click', () => {
+      window.location.href = 'https://play.google.com/store/apps/details?id=your-app-id'; // Replace with your app store link
+    });
+
+    // Sign Out
+    document.getElementById('sign-out').addEventListener('click', () => {
+      // Clear session or token
+      localStorage.removeItem('authToken'); // Example
+      window.location.href = '/login'; // Redirect to login page
+    });
+
+    // Privacy Policy (link already handled in HTML)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,279 @@
+/* Reset Defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #1f2937;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+/* Background Shapes */
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    opacity: 0.3;
+    filter: blur(50px);
+}
+
+.shape:first-child {
+    background: linear-gradient(to bottom right, #14b8a6, #312e81);
+    left: -100px;
+    top: 30px;
+}
+
+.shape:last-child {
+    background: linear-gradient(to right, #f97316, #facc15);
+    right: -50px;
+    bottom: 50px;
+}
+
+/* Navbar */
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    /* Ensures it stays above other content */
+}
+
+
+/* Navbar Left */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Navbar Title */
+.navbar-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Back Button */
+.back-button {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Navbar Right (Profile) */
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Profile */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile:hover {
+    transform: scale(1.05);
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.profile p {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.profile a {
+    font-size: 12px;
+    color: #14b8a6;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.profile a:hover {
+    color: #facc15;
+}
+
+/* Test List */
+.test-list {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+/* Test Item */
+.test-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.1);
+    width: 300px;
+    text-align: left;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Badge for New Test */
+.badge.new {
+    background: #22c55e;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+/* Status */
+.status {
+    color: #f97316;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Start Button */
+.start-button {
+    background: #14b8a6;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    font-size: 14px;
+}
+
+.start-button:hover {
+    background: #facc15;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .test-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .test-item {
+        width: 90%;
+        text-align: center;
+    }
+
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .navbar-title {
+        font-size: 18px;
+    }
+}
+
+/* Test Series Container */
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 15px rgba(255, 255, 255, 0.1);
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+    margin-top: 80px;
+}
+
+/* Test Series Title */
+.container h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Test List */
+.test-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* Individual Test Button */
+.test-item {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.test-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .test-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .test-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

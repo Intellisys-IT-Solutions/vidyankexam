@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEET Mock Test</title>
+  <style>
+/* General Body and Font Setup */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* Container Setup */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header Styling */
+header {
+  background-color: #8c8ca7;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 36px;
+  line-height: 80px;
+  flex-grow: 1;
+}
+
+/* Logo Positioning */
+.logo {
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  left: 0;
+  margin-top: -4px;
+}
+
+/* Main Content Styling */
+.content {
+  display: flex;
+  justify-content: space-between;
+  border: solid blue;
+
+  gap: 20px 10px;
+  flex-grow: 1;
+  padding: 20px;
+  flex-wrap: wrap;
+  overflow-y: scroll; /* Allow scrolling in the content area */
+
+  
+}
+
+/* Left Panel and Status Section */
+.left-area {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.right-panel {
+  flex: 1;
+  padding: 20px;
+  margin-left: 20px;
+  width: 250px;
+  /* border: solid rgb(0, 68, 255); */
+}
+
+/* Fixed Question Area */
+.question-area {
+  flex: 5;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  /* border: solid rgb(0, 68, 255); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-width: 900px;
+ 
+  position: fixed;
+  top: 20%;  /* Adjust the top position for centering */
+  left: 50%;
+  transform: translateX(-34%);  /* Center horizontally */
+  margin-top: 20px;
+  max-height: 70vh; /* Ensure it doesn’t exceed the viewport height */
+  overflow-y: auto; /* Allow the question content to scroll */
+}
+
+/* Other Styles for the Question Area */
+.question-area h2 {
+  font-size: 20px;
+}
+
+/* Options Styling */
+.options label {
+  font-size: 16px;
+  display: block;
+  margin: 10px 0;
+}
+
+/* Navigation Buttons */
+.navigation {
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Status Legend Section */
+.status-legend {
+  margin-bottom: 20px;
+}
+
+
+
+/* Question Numbers */
+.question-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  width: 200px;
+}
+
+.question-number {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0004ff;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.question-number.selected {
+  background-color: #5bc0de;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Timer Styling */
+.timer {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 3px;
+  font-size: 20px;
+  border-radius: 5px;
+  margin-top: 120px;
+  text-align: center;
+  margin-bottom: 20px;
+  size: 8px;
+}
+
+/* End Test Button Styling */
+.end-test-btn {
+  display: block;
+  margin: 25px auto;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.end-test-btn:hover {
+  background-color: darkred;
+}
+
+/* Camera Section */
+#camera {
+  position: fixed;
+  top: -16px;
+  right: 10px;
+  width: 158px;
+  height: 150px;
+}
+
+/* Video Styling */
+video {
+  width: 100%;
+  height: 100%;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .question-area {
+    position: fixed;
+    min-width: 100%;
+    
+
+    margin-top: 10px;
+  }
+
+  .content {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .left-area,
+  .right-panel {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .logo {
+    height: 150px;
+    width: 150px;
+  }
+
+  .question-number {
+    width: 35px;
+    height: 35px;
+  }
+
+  .question-numbers {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .end-test-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+  }
+
+ 
+}
+
+  </style>
+
+
+</head>
+
+<body>
+
+
+  <div class="container">
+    <header>
+      <h1>NEET</h1>
+      <img src="./logo-dark.png" alt="Eklavya Logo" class="logo">
+
+    </header>
+
+
+
+
+    <div class="timer" id="timer">Time Remaining: 60:00</div>
+    <div class="content">
+     
+      <div class="left-area">
+        <div class="right-panel">
+         
+          <div class="status-legend">
+            <div class="status-item">
+              <div class="color-box not-visited"></div>
+              <div id="not-visited-count">Not Visited: 50</div>
+            </div>
+            <div class="status-item">
+              <div class="color-box not-answered"></div>
+              <div id="not-answered-count">Not Answered: 50</div>
+            </div>
+            <div class="status-item">
+              <div class="color-box answered"></div>
+              <div id="answered-count">Answered: 0</div>
+            </div>
+            <div class="status-item">
+              <div class="color-box marked-for-review"></div>
+              <div id="marked-for-review-count">Marked for Review: 0</div>
+            </div>
+            <div class="status-item">
+              <div class="color-box answered-marked-for-review"></div>
+              <div id="answered-marked-for-review-count">Answered & Marked for Review: 0</div>
+            </div>
+
+            
+
+          </div>
+          <div class="question-numbers" id="question-numbers"></div>
+        </div>
+      </div>
+
+      <div class="question-area">
+
+        <div class="question-area-inner">
+          <h2 id="question-number">Question 1:</h2>
+          <p id="question-text"><strong>The characteristic distance at which quantum gravitational
+              effects
+              are
+              significant, the Planck length, can be determined from a suitable combination of the
+              fundamental
+              physical constants G, h, and c. Which of the following correctly gives the Planck
+              length?</strong></p>
+          <div class="options">
+            <label>
+              <input type="radio" name="answer" value="1"> (1) Gh23
+            </label><br>
+            <label>
+              <input type="radio" name="answer" value="2"> (2) G²hc
+            </label><br>
+            <label>
+              <input type="radio" name="answer" value="3"> (3) Gh24
+            </label><br>
+            <label>
+              <input type="radio" name="answer" value="4"> (4) Gh25
+            </label><br>
+          </div>
+          <div class="navigation">
+            <button class="btn back" id="back-btn">&lt;&lt; Back</button>
+            <button class="btn next" id="next-btn">Next &gt;&gt;</button>
+            <button class="btn submit">Submit</button>
+            <button class="btn clear" onclick="clearAnswers()">Clear</button>
+            <button class="btn mark-review" id="mark-review-btn">Mark for Review</button>
+
+            <button id="end-test-btn" class="end-test-btn">End Test</button>
+          </div>
+
+        </div>
+      </div>
+      <div id="camera">
+        <video id="liveCamera" autoplay muted playsinline></video>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+    // Questions data
+    const questions = [
+
+      { question: "The characteristic distance at which quantum gravitational effects are significant, the Planck length, can be determined from a suitable combination of the fundamental physical constants G, h, and c. Which of the following correctly gives the Planck length?", options: ["Gh23", "G²hc", "Gh24", "Gh25"] },
+      { question: "What is the atomic number of carbon?", options: ["6", "7", "8", "5"] },
+      { question: "Which law states that the pressure of a gas is inversely proportional to its volume at constant temperature?", options: ["Boyle's Law", "Charles' Law", "Avogadro's Law", "Dalton's Law"] },
+      { question: "Who is known as the father of modern physics?", options: ["Isaac Newton", "Albert Einstein", "Niels Bohr", "Galileo Galilei"] },
+      { question: "What is the SI unit of electric current?", options: ["Ampere", "Volt", "Ohm", "Tesla"] },
+      { question: "What is the chemical symbol for gold?", options: ["Au", "Ag", "Pb", "Fe"] },
+      { question: "Which element has the highest atomic number?", options: ["Uranium", "Neptunium", "Plutonium", "Oganesson"] },
+      { question: "The characteristic distance at which quantum gravitational effects are significant, the Planck length, can be determined from a suitable combination of the fundamental physical constants G, h, and c. Which of the following correctly gives the Planck length?", options: ["Gh23", "G²hc", "Gh24", "Gh25"] },
+      { question: "What is the atomic number of carbon?", options: ["6", "7", "8", "5"] },
+      { question: "Which law states that the pressure of a gas is inversely proportional to its volume at constant temperature?", options: ["Boyle's Law", "Charles' Law", "Avogadro's Law", "Dalton's Law"] },
+      { question: "Who is known as the father of modern physics?", options: ["Isaac Newton", "Albert Einstein", "Niels Bohr", "Galileo Galilei"] },
+      { question: "What is the SI unit of electric current?", options: ["Ampere", "Volt", "Ohm", "Tesla"] },
+      { question: "What is the chemical symbol for gold?", options: ["Au", "Ag", "Pb", "Fe"] },
+      { question: "Which element has the highest atomic number?", options: ["Uranium", "Neptunium", "Plutonium", "Oganesson"] },
+      { question: "What is the speed of light in vacuum?", options: ["3 x 10^8 m/s", "1.5 x 10^8 m/s", "3 x 10^10 m/s", "1 x 10^8 m/s"] },
+      { question: "Which gas is most abundant in the Earth's atmosphere?", options: ["Nitrogen", "Oxygen", "Argon", "Carbon dioxide"] },
+      { question: "What is the formula for calculating kinetic energy?", options: ["KE = 1/2 mv^2", "KE = mv^2", "KE = 1/2 mgh", "KE = mgh"] },
+      { question: "Who developed the theory of relativity?", options: ["Albert Einstein", "Isaac Newton", "Niels Bohr", "Galileo Galilei"] },
+      { question: "What is the SI unit of force?", options: ["Newton", "Joule", "Pascal", "Watt"] },
+      { question: "Which planet is known as the Red Planet?", options: ["Mars", "Venus", "Jupiter", "Saturn"] },
+      { question: "Which element is commonly used in the production of batteries?", options: ["Lithium", "Sodium", "Calcium", "Magnesium"] },
+      { question: "What is the chemical symbol for water?", options: ["H2O", "CO2", "O2", "CH4"] },
+      { question: "Which force keeps the planets in orbit?", options: ["Gravitational force", "Centripetal force", "Magnetic force", "Electric force"] },
+      { question: "What is the atomic number of hydrogen?", options: ["1", "2", "3", "4"] },
+      { question: "Which organ in the human body produces insulin?", options: ["Pancreas", "Liver", "Kidney", "Lung"] },
+      { question: "What is the main gas responsible for global warming?", options: ["Carbon dioxide", "Oxygen", "Nitrogen", "Methane"] },
+      { question: "What is the chemical formula for methane?", options: ["CH4", "C2H6", "C3H8", "C4H10"] },
+      { question: "What is the freezing point of water?", options: ["0°C", "32°F", "100°C", "0°F"] },
+      { question: "Which of the following is a renewable source of energy?", options: ["Solar energy", "Coal", "Natural gas", "Nuclear energy"] },
+      { question: "Which scientist is known for his laws of motion?", options: ["Isaac Newton", "Albert Einstein", "Niels Bohr", "Galileo Galilei"] },
+      { question: "What is the pH level of pure water?", options: ["7", "8", "6", "5"] },
+      { question: "What is the primary function of red blood cells?", options: ["Transport oxygen", "Fight infections", "Clot blood", "Produce hormones"] },
+      { question: "Who is credited with the discovery of electricity?", options: ["Benjamin Franklin", "Nikola Tesla", "Albert Einstein", "Isaac Newton"] },
+      { question: "Which gas is released when a match is struck?", options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Sulfur dioxide"] },
+      { question: "Which type of energy is stored in food?", options: ["Chemical energy", "Thermal energy", "Kinetic energy", "Electrical energy"] },
+      { question: "What is the most common state of matter in the Universe?", options: ["Plasma", "Solid", "Liquid", "Gas"] },
+      { question: "What is the formula for calculating acceleration?", options: ["a = (v - u) / t", "a = m * v", "a = F / m", "a = u + v"] },
+      { question: "What is the main source of energy for the Earth?", options: ["The Sun", "The Moon", "The Earth's core", "The oceans"] },
+      { question: "Which color of light has the shortest wavelength?", options: ["Violet", "Red", "Blue", "Green"] },
+      { question: "Which of these is a non-renewable resource?", options: ["Coal", "Wind", "Solar", "Geothermal"] },
+      { question: "What is the SI unit of temperature?", options: ["Kelvin", "Celsius", "Fahrenheit", "Rankine"] },
+      { question: "What is the chemical formula for carbon dioxide?", options: ["CO2", "CO", "C2O", "C3O2"] },
+      { question: "Which planet is closest to the Sun?", options: ["Mercury", "Venus", "Earth", "Mars"] },
+      { question: "Which element is most abundant in the Earth's crust?", options: ["Oxygen", "Silicon", "Aluminum", "Iron"] },
+      { question: "What is the main function of white blood cells?", options: ["Fight infection", "Transport oxygen", "Regulate body temperature", "Clot blood"] },
+      { question: "What is the unit of electric charge?", options: ["Coulomb", "Joule", "Ampere", "Volt"] },
+      { question: "Which of the following is the largest organ in the human body?", options: ["Skin", "Liver", "Lung", "Heart"] },
+      { question: "What is the process by which plants make their own food?", options: ["Photosynthesis", "Respiration", "Fermentation", "Digestion"] },
+      { question: "Which of these is an example of a conductor?", options: ["Copper", "Wood", "Rubber", "Glass"] },
+      { question: "Which scientist discovered the electron?", options: ["J.J. Thomson", "Ernest Rutherford", "Marie Curie", "Isaac Newton"] }
+
+    ];
+
+    let currentQuestion = 1;
+    const totalQuestions = questions.length;
+    const questionNumbersContainer = document.getElementById('question-numbers');
+    const questionNumberDisplay = document.getElementById('question-number');
+    const questionTextDisplay = document.getElementById('question-text');
+
+    let visitedQuestions = Array(totalQuestions).fill(false);
+    let answeredQuestions = Array(totalQuestions).fill(false);
+    let markedForReview = Array(totalQuestions).fill(false);
+
+    // Timer setup (60 minutes)
+    let totalTime = 60 * 60 * 1000;
+    let startTime = localStorage.getItem('startTime') ? parseInt(localStorage.getItem('startTime')) : Date.now();
+    let endTime = startTime + totalTime;
+
+    function updateTimer() {
+      let remainingTime = endTime - Date.now();
+      if (remainingTime <= 0) {
+        alert("Time's up!");
+        clearInterval(timerInterval);
+      } else {
+        let minutes = Math.floor(remainingTime / 60000);
+        let seconds = Math.floor((remainingTime % 60000) / 1000);
+        document.getElementById('timer').textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      }
+    }
+
+    localStorage.setItem('endTime', endTime);
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+
+    function generateQuestionNumbers() {
+      for (let i = 1; i <= totalQuestions; i++) {
+        const div = document.createElement('div');
+        div.classList.add('question-number');
+        div.textContent = i;
+
+        if (i === currentQuestion) {
+          div.classList.add('selected');
+        }
+
+        div.addEventListener('click', function () {
+          markVisited(currentQuestion);
+          currentQuestion = i;
+          updateQuestion();
+        });
+
+        questionNumbersContainer.appendChild(div);
+      }
+    }
+
+    function updateQuestion() {
+      questionNumberDisplay.textContent = 'Question ' + currentQuestion;
+      questionTextDisplay.innerHTML = `<strong>${questions[currentQuestion - 1].question}</strong>`;
+
+      const options = questions[currentQuestion - 1].options;
+      let optionsHtml = "";
+      options.forEach((option, index) => {
+        optionsHtml += `<label><input type="radio" name="answer" value="${index + 1}" onclick="markAnswered(${currentQuestion})"> (${index + 1}) ${option}</label><br>`;
+      });
+      document.querySelector('.options').innerHTML = optionsHtml;
+
+      updateQuestionNumbers();
+      updateCounts();
+    }
+
+    function updateQuestionNumbers() {
+      const questionNumbers = document.querySelectorAll('.question-number');
+      questionNumbers.forEach((q, index) => {
+        q.classList.toggle('selected', index + 1 === currentQuestion);
+        q.classList.toggle('not-visited', !visitedQuestions[index]);
+        q.classList.toggle('marked-review', markedForReview[index]); // Highlight marked questions
+      });
+    }
+
+    function markVisited(questionNumber) {
+      visitedQuestions[questionNumber - 1] = true;
+    }
+
+    function markAnswered(questionNumber) {
+      answeredQuestions[questionNumber - 1] = true;
+      updateCounts();
+    }
+
+    function markForReview(questionNumber) {
+      markedForReview[questionNumber - 1] = !markedForReview[questionNumber - 1]; // Toggle status
+      updateCounts();
+      updateQuestionNumbers();
+    }
+
+    function updateCounts() {
+      const notVisited = visitedQuestions.filter(visited => !visited).length;
+      const notAnswered = answeredQuestions.filter(answered => !answered).length;
+      const answered = answeredQuestions.filter(answered => answered).length;
+      const markedForReviewCount = markedForReview.filter(marked => marked).length;
+      const answeredAndMarkedForReview = answeredQuestions.filter((answered, index) => answered && markedForReview[index]).length;
+
+      document.getElementById('not-visited-count').textContent = `Not Visited: ${notVisited}`;
+      document.getElementById('not-answered-count').textContent = `Not Answered: ${notAnswered}`;
+      document.getElementById('answered-count').textContent = `Answered: ${answered}`;
+      document.getElementById('marked-for-review-count').textContent = `Marked for Review: ${markedForReviewCount}`;
+      document.getElementById('answered-marked-for-review-count').textContent = `Answered & Marked for Review: ${answeredAndMarkedForReview}`;
+    }
+
+    document.getElementById('next-btn').addEventListener('click', function () {
+      if (currentQuestion < totalQuestions) {
+        markVisited(currentQuestion);
+        currentQuestion++;
+        updateQuestion();
+      }
+    });
+
+    document.getElementById('back-btn').addEventListener('click', function () {
+      if (currentQuestion > 1) {
+        markVisited(currentQuestion);
+        currentQuestion--;
+        updateQuestion();
+      }
+    });
+
+    document.getElementById('mark-review-btn').addEventListener('click', function () {
+      markForReview(currentQuestion);
+    });
+
+    function clearAnswers() {
+      document.querySelectorAll('.options input').forEach(input => {
+        input.checked = false;
+      });
+      answeredQuestions[currentQuestion - 1] = false;
+      updateCounts();
+    }
+
+    async function startCamera() {
+      const videoElement = document.getElementById('liveCamera');
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoElement.srcObject = stream;
+      } catch (error) {
+        console.error('Camera access failed:', error);
+      }
+    }
+
+    startCamera();
+    generateQuestionNumbers();
+    updateQuestion();
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vidyanka Dashboard</title>
+    <link rel="stylesheet" href="../styles/userDash.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <style>
+        /* Hamburger button - Hidden on desktop */
+        .hamburger {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #2d3748;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Sidebar hidden by default on mobile */
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 23px;
+            cursor: pointer;
+            padding: 10px;
+            text-align: right;
+            width: 100%;
+            display: none;
+            /* Hidden on desktop */
+        }
+
+        /* Sidebar nav */
+        .sidebar-nav {
+            gap: 6px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-button i {
+            font-size: 18px;
+        }
+
+        /* Main content area */
+
+
+        /* Responsive: Mobile View */
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+                /* Show hamburger button on mobile */
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                /* Hide sidebar by default */
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                /* Show sidebar when active */
+            }
+
+            .close-btn {
+                display: none;
+                /* Show close button on mobile */
+            }
+
+            .main-container {
+                margin-left: 0;
+                /* No margin on mobile */
+            }
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <header>
+        <div class="header-container">
+
+            <div class="header-content">
+                <button id="hamburger-btn" class="hamburger">☰</button>
+                <div id="user-name" class="profile">
+                    <span class="name" id="user-display-name">Loading...</span>
+                    <div class="notification-icon">
+                        🔔 <span id="notificationCount">0</span>
+                    </div>
+                </div>
+                
+                
+                <div class="profile date-time">
+                    <span id="current-time" class="current-time">Time : </span>
+                    <span id="current-date" class="current-date">Date : </span>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <aside class="sidebar">
+        <button id="close-sidebar" class="close-btn">×</button>
+        <div class="logo">
+            <img src="../assets/Untitled design.png" alt="Logo" />
+        </div>
+        <nav class="sidebar-nav">
+            <button id="toggleButtonDash" class="nav-button">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button id="toggleButton" class="nav-button">
+                <i class="fas fa-book-open"></i> Test Series
+            </button>
+            <button id="toggleButtonHist" class="nav-button">
+                <i class="fas fa-history"></i> Exam History
+            </button>
+            <button id="notification-btn" class="nav-button">
+                <i class="fas fa-bell"></i> Notification
+            </button>
+            <button id="profile-btn" class="nav-button">
+                <i class="fas fa-user-circle"></i> My Profile
+            </button>
+            <button id="settings-btn" class="nav-button">
+                <i class="fas fa-cogs"></i> Settings
+            </button>
+            <button id="help-btn" class="nav-button">
+                <i class="fas fa-question-circle"></i> Help & Support
+            </button>
+            <button id="logout-btn" class="nav-button">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </nav>
+    </aside>
+
+
+    <div class="main-container">
+        <section class="dashboard">
+            <div class="main-content-not">
+                <!-- <div class="header">
+                    <h2>Notifications</h2>
+                    <button class=" btn-retest clear-all">Clear All</button>
+                </div>
+                <div class="notifications">
+                    <div class="notification">
+                        <div class="icon">📩</div>
+                        <div class="message">You have a new message!</div>
+                        <button class="clear-btn">❌</button>
+                    </div>
+                    <div class="notification">
+                        <div class="icon">📦</div>
+                        <div class="message">Your order has been shipped!</div>
+                        <button class="clear-btn">❌</button>
+                    </div>
+                    <div class="notification">
+                        <div class="icon">⚠️</div>
+                        <div class="message">Warning: Low battery!</div>
+                        <button class="clear-btn">❌</button>
+                    </div>
+                </div>
+            </div> -->
+
+                <div class="test-series" style="    margin-left: -10px;">
+                    <a href="./freetest.html" class="test">Free trial</a>
+
+                    <a href="./ajay.html" class="test">NEET</a>
+                    <a href="./test-series.html" class="test disabled">NEET <i class="lock-icon">🔒</i></a>
+                    <a href="./test-series.html" class="test disabled">JEE <i class="lock-icon">🔒</i></a>
+                    <a href="./test-series.html" class="test disabled">CET <i class="lock-icon">🔒</i></a>
+
+                </div>
+
+                <!-- <div class="progress-container">
+                    <div class="progress-circle">
+                        <div class="progress-inner">
+                            <div class="progress-number">42</div>
+                            <div class="progress-total">/3441</div>
+                            <div class="progress-status">Solved</div>
+                            <div class="progress-attempting">0 Attempting</div>
+                        </div>
+                    </div>
+                    <div class="progress-circle">
+                        <div class="progress-inner">
+                            <div class="progress-number">42</div>
+                            <div class="progress-total">/3441</div>
+                            <div class="progress-status">Solved</div>
+                            <div class="progress-attempting">0 Attempting</div>
+                        </div>
+                    </div>
+                    <div class="progress-circle">
+                        <div class="progress-inner">
+                            <div class="progress-number">42</div>
+                            <div class="progress-total">/3441</div>
+                            <div class="progress-status">Solved</div>
+                            <div class="progress-attempting">0 Attempting</div>
+                        </div>
+                    </div>
+                    <div class="progress-circle">
+                        <div class="progress-inner">
+                            <div class="progress-number">42</div>
+                            <div class="progress-total">/3441</div>
+                            <div class="progress-status">Solved</div>
+                            <div class="progress-attempting">0 Attempting</div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="results-section">
+                    <h2>Your Test Series</h2>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-item">
+                                <span class="result-label">ID:</span>
+                                <span class="result-value">1</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Exam Name:</span>
+                                <span class="result-value">MPSC</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Subject:</span>
+                                <span class="result-value">Math</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Grade:</span>
+                                <span class="result-grade">A</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Marks:</span>
+                                <span class="result-value">80/100</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Date:</span>
+                                <span class="result-value">12/10/2021</span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="btn btn-retest">Retest</button>
+                                <a href="report.html" class="btn btn-report">Get Report</a>
+                            </div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-item">
+                                <span class="result-label">ID:</span>
+                                <span class="result-value">1</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Exam Name:</span>
+                                <span class="result-value">MPSC</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Subject:</span>
+                                <span class="result-value">Math</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Grade:</span>
+                                <span class="result-grade">A</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Marks:</span>
+                                <span class="result-value">80/100</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Date:</span>
+                                <span class="result-value">12/10/2021</span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="btn btn-retest">Retest</button>
+                                <a href="report.html" class="btn btn-report">Get Report</a>
+                            </div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-item">
+                                <span class="result-label">ID:</span>
+                                <span class="result-value">1</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Exam Name:</span>
+                                <span class="result-value">MPSC</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Subject:</span>
+                                <span class="result-value">Math</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Grade:</span>
+                                <span class="result-grade">A</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Marks:</span>
+                                <span class="result-value">80/100</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Date:</span>
+                                <span class="result-value">12/10/2021</span>
+                            </div>
+                            <div class="result-actions">
+                                <button class="btn btn-retest">Retest</button>
+                                <a href="report.html" class="btn btn-report">Get Report</a>
+                            </div>
+                        </div>
+                        <!-- Repeat result-card for other results -->
+                    </div>
+                </div>
+        </section>
+
+        <section class="specific-test">
+            <div class="test-series">
+                <a href="./freetest.html" class="test">Free Trail</a>
+
+                <a href="./ajay.html" class="test">FMGE</a>
+                <a href="./test-series.html" class="test disabled">NEET <i class="lock-icon">🔒</i></a>
+                <a href="./test-series.html" class="test disabled">JEE <i class="lock-icon">🔒</i></a>
+                <a href="./test-series.html" class="test disabled">CET <i class="lock-icon">🔒</i></a>
+
+            </div>
+        </section>
+
+        <!-- User Profile section -->
+        <section class="user-profile">
+            <h1>My Profile</h1>
+
+            <!-- Candidate Info Display -->
+            
+
+            <!-- Profile Display Mode -->
+            <div class="profile-display">
+                <div><strong>First Name:</strong> <span id="display-fname"></span></div>
+                <div><strong>Middle Name:</strong> <span id="display-mname"></span></div>
+                <div><strong>Last Name:</strong> <span id="display-lname"></span></div>
+                <div><strong>City:</strong> <span id="display-city"></span></div>
+                <div><strong>Phone:</strong> <span id="display-phone"></span></div>
+                <div><strong>Email:</strong> <span id="display-email"></span></div>
+
+
+                <button id="edit-profile-btn">Edit Profile</button>
+            </div>
+
+            <!-- Profile Edit Mode (Hidden Initially) -->
+            <div class="profile-edit" style="display:none;">
+                <div class="field">
+                    <label for="fname">First Name:</label>
+                    <input type="text" id="fname" />
+                </div>
+                <div class="field">
+                    <label for="mname">Middle Name:</label>
+                    <input type="text" id="mname" />
+                </div>
+                <div class="field">
+                    <label for="lname">Last Name:</label>
+                    <input type="text" id="lname" />
+                </div>
+                <div class="field">
+                    <label for="city">City:</label>
+                    <input type="text" id="city">
+
+                </div>
+                <div class="field">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" autocomplete="off" />
+                    <p id="phoneError" class="error"></p>
+                </div>
+                <div class="field">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" autocomplete="off" />
+                    <p id="emailError" class="error"></p>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; ">
+                    <button type="button" class="btn btn-secondary" id="cancelButton"> ← Back</button>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            document.getElementById("cancelButton").addEventListener("click", function () {
+                                window.location.href = "userDash.html";  // Redirect to the create-candidate.html page
+                            });
+                        });
+                    </script>
+
+                    <button id="save-profile-btn" disabled>Save Profile</button>
+
+                </div>
+            </div>
+
+            <!-- OTP Modal -->
+            <div id="otp-modal" style="display: none;">
+                <div class="otp-container">
+                    <h3 id="otp-for">Enter OTP</h3>
+                    <input type="text" id="otp" maxlength="6" placeholder="Enter 6-digit OTP">
+                    <p id="otpError" class="error"></p>
+                    <button id="verify-otp-btn" disabled>Verify OTP</button>
+                    <button class="cancel-btn" onclick="closeOtpPopup()">Cancel</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notification section -->
+
+
+        <section class="notification-section">
+            <div class="main-content-not">
+                <div class="header">
+                    <h2>Notification</h2>
+                    <button class=" btn-retest clear-all">Clear All</button>
+                </div>
+                <div class="notifications">
+                    <div class="notification">
+                        <div class="icon">📩</div>
+                        <div class="message">You have a new message!</div>
+                        <button class="clear-btn">❌</button>
+                    </div>
+                    <div class="notification">
+                        <div class="icon">📦</div>
+                        <div class="message">Your order has been shipped!</div>
+                        <button class="clear-btn">❌</button>
+                    </div>
+                    <div class="notification">
+                        <div class="icon">⚠️</div>
+                        <div class="message">Warning: Low battery!</div>
+                        <button class="clear-btn">❌</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Help section -->
+
+        <section class="help-section">
+
+
+            <div class="container">
+                <style>
+                    .btn {
+                        margin-left: 20px;
+                        background-color: #14b8a6;
+                        color: white;
+                        border: none;
+                        padding: 10px 15px;
+                        cursor: pointer;
+                        border-radius: 5px;
+                    }
+
+                    .discard-btn {
+                        height: auto;
+                        width: auto;
+                        background-color: #f97316;
+                        margin-left: 10px;
+                    }
+
+                    .btn:hover {
+                        color: white;
+                        background: #19065e;
+                    }
+                </style>
+                <h1>Support Request</h1>
+                <form id="supportForm">
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" rows="3" required
+                            placeholder="Describe your issue..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Upload Image:</label>
+                        <input type="file" id="image" name="image" accept="image/*" required>
+                        <button type="button" id="discardImage" class="btn discard-btn" style="display: none;">❌
+                            Discard</button>
+                    </div>
+
+                    <button type="submit" class="btn">Submit Request</button>
+
+                </form>
+            </div>
+            <div class="baap">
+
+                <div class="help-desk">
+                    <h2>Help Desk</h2>
+                    <p>If you need immediate assistance, reach out to our team:</p>
+                    <br>
+                    <p style="font-size: large;"><strong>Contact Numbers:</strong></p>
+
+                    <p>+1 (555) 123-4567</p>
+                    <p>+1 (555) 234-5678</p>
+                    <br>
+                    <p style="font-size: large;"><strong>Emails:</strong></p>
+                    <a href="mailto:support@Vidyankasupport.com" style="color: #14b8a6;">
+                        support@Vidyankasupport.com
+                    </a>
+
+                    <a href="mailto:helpdesk@Vidyankasupport.com" style="color: #14b8a6;">
+                        helpdesk@Vidyankasupport.com
+                    </a>
+
+                </div>
+
+                <div class="instructions">
+                    <h2>Exam Instructions</h2>
+                    <ul>
+                        <li>Ensure a stable internet connection before the exam.</li>
+                        <li>Use a device with a functional camera and microphone for verification.</li>
+                        <li>Be on time! The exam starts promptly at the scheduled time.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result history section -->
+        <section class="result-history">
+            <div class="container">
+                <div class="main-content">
+                    <div class="dropdowns">
+                        <select id="category-dropdown">
+
+                            <!-- Categories will be populated dynamically -->
+                        </select>
+                        <select id="testseries-dropdown">
+
+                            <!-- Test series will be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="button filter-btn">
+                        <!-- <button class="filter-btn">Filter</button> -->
+                    </div>
+                </div>
+
+                <div class="test-series-list">
+                    <!-- Test series list will be dynamically added here -->
+                </div>
+
+                <div class="question-paper-list">
+                    <!-- Question paper list will be dynamically added here -->
+                </div>
+                <div class="di">
+
+                    <div class="question-container">
+                        <!-- Questions will be dynamically loaded here -->
+                    </div>
+                    <div class="result">
+
+                        <div class="report-container">
+                            <div class="report-header">
+                                <h1>Exam Report - MPSC Mathematics</h1>
+                                <!-- <a href="index.html" class="back-button">Back to Dashboard</a> -->
+                            </div>
+
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value">80%</div>
+                                    <div class="stat-label">Overall Score</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">A</div>
+                                    <div class="stat-label">Grade</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">85%</div>
+                                    <div class="stat-label">Percentile</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">45/50</div>
+                                    <div class="stat-label">Questions Correct</div>
+                                </div>
+                            </div>
+
+                            <div class="charts-grid">
+                                <div class="chart-card">
+                                    <h3 class="chart-title">Performance by Topic</h3>
+                                    <div class="bar-chart">
+                                        <div class="bar" style="height: 80%" data-value="80%"></div>
+                                        <div class="bar" style="height: 65%" data-value="65%"></div>
+                                        <div class="bar" style="height: 90%" data-value="90%"></div>
+                                        <div class="bar" style="height: 75%" data-value="75%"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-card">
+                                    <h3 class="chart-title">Performance by Topic</h3>
+                                    <div class="bar-chart">
+                                        <div class="bar-container">
+
+                                            <div class="bar" style="height: 80%" data-value="80%"></div>
+                                        </div>
+                                        <div class="bar-container">
+                                            <span class="topic-name">Physics</span>
+                                            <div class="bar" style="height: 65%" data-value="65%"></div>
+                                        </div>
+                                        <div class="bar-container">
+                                            <span class="topic-name">Chemistry</span>
+                                            <div class="bar" style="height: 90%" data-value="90%"></div>
+                                        </div>
+                                        <div class="bar-container">
+                                            <span class="topic-name">Biology</span>
+                                            <div class="bar" style="height: 75%" data-value="75%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="chart-card">
+                                    <h3 class="chart-title">Question Distribution</h3>
+                                    <div class="pie-chart"></div>
+                                    <div class="pie-legend">
+                                        <div class="legend-item">
+                                            <div class="legend-color" style="background-color: #22c55e"></div>
+                                            <span>Correct</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-color" style="background-color: #f97316"></div>
+                                            <span>Incorrect</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-color" style="background-color: #ef4444"></div>
+                                            <span>Skipped</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="chart-card">
+                                    <h3 class="chart-title">Time Management</h3>
+                                    <div class="line-chart">
+                                        <div class="line"></div>
+                                        <div class="point" style="left: 20%; top: 40%"></div>
+                                        <div class="point" style="left: 40%; top: 60%"></div>
+                                        <div class="point" style="left: 60%; top: 30%"></div>
+                                        <div class="point" style="left: 80%; top: 70%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="chart-card">
+                                    <h3 class="chart-title">Topic Mastery</h3>
+                                    <div class="progress-chart">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 85%"></div>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 70%"></div>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 90%"></div>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 65%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Settings section -->
+        <section class="settings-section">
+            <div class="settings-page">
+                <h1>Settings</h1>
+
+                <!-- Left Container for Notification Settings -->
+                <div class="left-container">
+                    <div class="setting-section">
+                        <h2>Notification Settings</h2>
+                        <div class="setting-item">
+                            <label for="notifications">Enable Notifications</label>
+                            <input type="checkbox" id="notifications" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="exam-reminder">Exam Reminders</label>
+                            <input type="checkbox" id="exam-reminder" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="result-notifications">Result Notifications</label>
+                            <input type="checkbox" id="result-notifications" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="test-series-updates">Test Series Updates</label>
+                            <input type="checkbox" id="test-series-updates" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="announcement-notifications">Announcement Notifications</label>
+                            <input type="checkbox" id="announcement-notifications" checked>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Container for Account, Share & Rate, Legal -->
+                <div class="right-container">
+                    <!-- Account Settings -->
+                    <div class="setting-section">
+                        <h2>Account Settings</h2>
+                        <div class="setting-item">
+                            <button id="forgot-password">Reset Password</button>
+                        </div>
+                        <div class="setting-item">
+                            <button id="sign-out">Sign Out</button>
+                        </div>
+                    </div>
+
+                    <!-- Share & Rate -->
+                    <!-- Share & Rate -->
+                    <div class="setting-section">
+                        <h2>Share & Rate</h2>
+                        <div class="setting-item">
+                            <button id="share-referral">Refer Friends</button>
+                        </div>
+                        <div class="setting-item">
+                            <button id="rate-us">Rate Us</button>
+                        </div>
+                    </div>
+
+
+                    <!-- Privacy Policy -->
+                    <div class="setting-section">
+                        <h2>Legal</h2>
+                        <div class="setting-item">
+                            <a href="/privacy-policy.html" id="privacy-policy">Privacy Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </section>
+    </div>
+    <script>
+        // Hamburger Button
+        const hamburgerBtn = document.getElementById("hamburger-btn");
+        const sidebar = document.querySelector(".sidebar");
+        const closeSidebar = document.getElementById("close-sidebar");
+        const navButtons = document.querySelectorAll(".sidebar button"); // Ensure navButtons is correctly selected
+
+        if (hamburgerBtn && sidebar) {
+            // Toggle sidebar only in mobile view
+            hamburgerBtn.addEventListener("click", function () {
+                sidebar.classList.toggle("active");
+            });
+
+            // Close sidebar button functionality (if present)
+            if (closeSidebar) {
+                closeSidebar.addEventListener("click", function () {
+                    sidebar.classList.remove("active");
+                });
+            }
+
+            // Close sidebar if user clicks outside in mobile view
+            document.addEventListener("click", function (event) {
+                if (
+                    window.innerWidth <= 768 &&
+                    !sidebar.contains(event.target) &&
+                    !hamburgerBtn.contains(event.target)
+                ) {
+                    sidebar.classList.remove("active");
+                }
+            });
+
+            // Close sidebar on navigation button click in mobile view
+            if (navButtons.length > 0) {
+                navButtons.forEach((button) => {
+                    button.addEventListener("click", () => {
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.remove("active");
+                        }
+                    });
+                });
+            }
+        }
+    </script>
+
+
+
+
+
+
+    <footer>&copy; 2025 Vidyank</footer>
+
+    <script src="../scripts/uerdashscript.js"></script>
+    <script src="../scripts/profileUpdate.js"></script>
+    <script src="../scripts/UD_dynamic_name.js"></script>
+    <script src="../scripts/support.js"></script>
+</body>
+
+</html>

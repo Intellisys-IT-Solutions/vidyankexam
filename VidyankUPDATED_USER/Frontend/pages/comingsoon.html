@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | Stay Tuned</title>
+    <link rel="stylesheet" href="./theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Arial", sans-serif;
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 60px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: zoomIn 2s ease-in-out;
+        }
+
+        .stay-tuned {
+            font-size: 26px;
+            margin-top: 10px;
+            animation: pulse 1.5s infinite alternate, fadeIn 3s ease-in-out;
+        }
+
+        .countdown {
+            margin-top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: inline-block;
+            animation: bounceIn 2s ease-in-out;
+        }
+
+        .earth {
+            width: 150px;
+            height: 150px;
+            background: url("https://upload.wikimedia.org/wikipedia/commons/8/80/Earth_Western_Hemisphere_transparent_background.png") no-repeat center/cover;
+            animation: rotateEarth 8s linear infinite;
+            margin-top: 20px;
+        }
+
+        @keyframes pulse {
+            from { text-shadow: 0 0 5px #ffffff, 0 0 15px #00eaff; }
+            to { text-shadow: 0 0 10px #ffffff, 0 0 30px #00eaff; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes rotateEarth {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Coming Soon</h1>
+    <p class="stay-tuned">🚀 Stay Tuned for Something Amazing!</p>
+    <div class="countdown" id="countdown"></div>
+    <div class="earth"></div>
+
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <script>
+        function startCountdown(targetDate) {
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeLeft = targetDate - now;
+
+                if (timeLeft <= 0) {
+                    document.getElementById("countdown").innerHTML = "🚀 We are LIVE!";
+                    return;
+                }
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Set launch date (Modify as needed)
+        const launchDate = new Date("February 12, 2025 00:00:00").getTime();
+        startCountdown(launchDate);
+    </script>
+    
+
+</body>
+</html>

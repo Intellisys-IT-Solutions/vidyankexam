@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Vidnyank</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/userDash.css">
+    <style media="screen">
+        *,
+        *:before,
+        *:after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+
+
+        form {
+            height: 520px;
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.13);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+            padding: 50px 35px;
+            text-align: center;
+        }
+
+        form * {
+
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        input {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        ::placeholder {
+            color: #6e6d6d88;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .links {
+
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .links a {
+            color: #e5e5e5;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+            background-color: black;
+        }
+
+        .social {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .social div {
+            width: 150px;
+            border-radius: 3px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.27);
+            color: #3464bc;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .social div:hover {
+            background-color: rgba(255, 255, 255, 0.47);
+        }
+
+        .social .fb {
+            margin-left: 15px;
+        }
+
+        .social i {
+            margin-right: 4px;
+        }
+
+        /* Modal styling */
+        .otp-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1f2937;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .otp-modal-content {
+            background-color: rgba(9, 11, 22, 0.658);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            color: white;
+            text-align: center;
+        }
+
+        .otp-modal input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .otp-modal button {
+            width: 100%;
+            background-color: #3464bc;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* 🔥 Responsive Design */
+        @media (max-width: 1024px) {
+            form {
+                width: 80%;
+                max-width: 450px;
+                padding: 35px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            form {
+                width: 90%;
+                padding: 30px;
+            }
+
+            form h3 {
+                font-size: 1.5rem;
+            }
+
+            .links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .links a {
+                margin-bottom: 5px;
+            }
+
+            button {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            form {
+                width: 95%;
+                padding: 25px;
+            }
+
+            form h3 {
+                font-size: 1.4rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+            }
+
+            input {
+                height: 40px;
+                font-size: 0.9rem;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .links {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form>
+        <h3>Login Here</h3>
+
+        <label for="username">Username</label>
+        <input type="text" placeholder="Email" id="username">
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password">
+
+        <div class="links">
+            <a href="./forgetpass.html">Forgot Password?</a>
+            <a href="registration.html">Register Here</a>
+        </div>
+
+        <button type="button" onclick="showOtpModal()" id="login-btn">Log In</button>
+    </form>
+
+    <!-- OTP Modal -->
+    <div class="otp-modal" id="otp-modal">
+        <div class="otp-modal-content">
+            <h4>Enter OTP</h4>
+            <input type="text" id="otp" placeholder="Enter OTP" />
+            <button onclick="verifyOtp()" id="verify-otp-btn">Verify OTP</button>
+        </div>
+    </div>
+
+
+
+    <script src="login_script.js"></script>
+</body>
+
+</html>
